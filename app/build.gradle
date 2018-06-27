@@ -50,6 +50,9 @@ dependencies {
     implementation deps.lombok
     annotationProcessor deps.lombok
 
+    implementation deps.butterknife
+    annotationProcessor deps.butterknife_compiler
+
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
     androidTestImplementation deps.espresso

@@ -25,44 +25,39 @@ buildscript {
             'espresso'      : '3.0.2',
             'random'        : '1.0',
 
-            'lombok'        : '1.16.20'
+            'lombok'        : '1.16.20',
+            'butterknife'   : '8.8.1'
     ]
 
     ext.deps = [
-            junit         : "junit:junit:${versions.junit}",
-            testrunner    : "com.android.support.test:runner:${versions.testRunner}",
-            espresso      : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
-            random        : "com.github.slmyldz:AndroidRandom:${versions.random}",
+            junit               : "junit:junit:${versions.junit}",
+            testrunner          : "com.android.support.test:runner:${versions.testRunner}",
+            espresso            : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
+            random              : "com.github.slmyldz:AndroidRandom:${versions.random}",
 
-            grox          : "com.groupon.grox:grox-core-rx2:${versions.grox}",
-            grox_command  : "com.groupon.grox:grox-commands-rx2:${versions.grox}",
-            threetenabp   : "com.jakewharton.threetenabp:threetenabp:${versions.threetenabp}",
-            stream        : "com.annimon:stream:${versions.stream}",
-            rxjava        : "io.reactivex.rxjava2:rxjava:${versions.rx}",
-            rxandroid     : "io.reactivex.rxjava2:rxjava:${versions.rxAndroid}",
-            rxbinding     : "com.jakewharton.rxbinding2:rxbinding:${versions.rxBinding}",
-            glide         : "com.github.bumptech.glide:glide:${versions.glide}",
-            glide_compiler: "com.github.bumptech.glide:compiler:${versions.glide}",
+            grox                : "com.groupon.grox:grox-core-rx2:${versions.grox}",
+            grox_command        : "com.groupon.grox:grox-commands-rx2:${versions.grox}",
+            threetenabp         : "com.jakewharton.threetenabp:threetenabp:${versions.threetenabp}",
+            stream              : "com.annimon:stream:${versions.stream}",
+            rxjava              : "io.reactivex.rxjava2:rxjava:${versions.rx}",
+            rxandroid           : "io.reactivex.rxjava2:rxjava:${versions.rxAndroid}",
+            rxbinding           : "com.jakewharton.rxbinding2:rxbinding:${versions.rxBinding}",
+            glide               : "com.github.bumptech.glide:glide:${versions.glide}",
+            glide_compiler      : "com.github.bumptech.glide:compiler:${versions.glide}",
 
-            retrofit      : ['core': "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-                             'json': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-                             'rx'  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",],
-            okhttp        : ['logging': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",],
+            retrofit            : ['core': "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+                                   'json': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+                                   'rx'  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",],
+            okhttp              : ['logging': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",],
 
-            // firebase-ui 3.2.2 버전은 firebase 11.8.0 버전에 의존함
-            fire_core     : "com.google.firebase:firebase-core:${versions.firebase}",
-            fire_auth     : "com.firebaseui:firebase-ui-auth:${versions.firebaseUi}",
-            fire_database : "com.firebaseui:firebase-ui-database:${versions.firebaseUi}",
-            fire_store    : "com.firebaseui:firebase-ui-firestore:${versions.firebaseUi}",
-            fire_storage  : "com.firebaseui:firebase-ui-storage:${versions.firebaseUi}",
-            fire_rx       : "com.github.frangsierra:rx2firebase:${versions.rxFirebase}",
+            constraint          : "com.android.support.constraint:constraint-layout:${versions.constraint}",
+            'support'           : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
+                                   'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
+                                   'design'    : "com.android.support:design:${versions.supportLibrary}",],
 
-            constraint    : "com.android.support.constraint:constraint-layout:${versions.constraint}",
-            'support'     : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
-                             'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
-                             'design'    : "com.android.support:design:${versions.supportLibrary}",],
-
-            lombok        : "org.projectlombok:lombok:${versions.lombok}"
+            lombok              : "org.projectlombok:lombok:${versions.lombok}",
+            butterknife         : "com.jakewharton:butterknife:${versions.butterknife}",
+            butterknife_compiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     ]
 
     repositories {
