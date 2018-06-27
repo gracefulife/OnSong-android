@@ -3,7 +3,6 @@ package com.depromeet.onsong;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
@@ -23,8 +22,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
   }
 
-  @Override public void setContentView(View view) {
-    super.setContentView(view);
+  @Override public void setContentView(int layoutResID) {
+    super.setContentView(layoutResID);
     ButterKnife.bind(this);
   }
 }
