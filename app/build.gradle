@@ -36,6 +36,7 @@ dependencies {
     implementation deps.support.compat
     implementation deps.support.design
     implementation deps.support.annotation
+    implementation deps.constraint
 
     implementation deps.threetenabp
     implementation deps.stream
