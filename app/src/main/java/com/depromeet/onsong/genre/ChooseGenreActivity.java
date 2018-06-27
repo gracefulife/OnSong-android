@@ -1,8 +1,11 @@
-package com.depromeet.onsong;
+package com.depromeet.onsong.genre;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+
+import com.depromeet.onsong.BaseActivity;
+import com.depromeet.onsong.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
