@@ -1,6 +1,7 @@
 package com.depromeet.onsong.genre;
 
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -75,9 +76,16 @@ public class ChooseGenreActivity extends BaseActivity {
 
   @Override protected void subscribeStore() {
     genreStateStore.subscribe(state -> {
-      layoutMain.setBackground(
-          ContextCompat.getDrawable(this, state.genres.get(state.chosen).genreDrawableRes)
-      );
+      Drawable currentDrawable = layoutMain.getBackground() == null ?
+          ContextCompat.getDrawable(this, R.color.genreContentsAccent) : layoutMain.getBackground();
+
+      TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{
+          currentDrawable, ContextCompat.getDrawable(this, state.genres.get(state.chosen).genreDrawableRes)
+      });
+      transitionDrawable.setCrossFadeEnabled(true);
+      layoutMain.setBackground(transitionDrawable);
+      transitionDrawable.startTransition(400);
+
       genreRecyclerAdapter.notifyDataSetChanged();
     });
   }
