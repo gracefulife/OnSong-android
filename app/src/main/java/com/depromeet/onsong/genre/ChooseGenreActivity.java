@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -32,6 +34,7 @@ public class ChooseGenreActivity extends BaseActivity {
 
   @BindView(R.id.layout_main) ConstraintLayout layoutMain;
   @BindView(R.id.recycler_genre) RecyclerView recyclerGenre;
+  @BindView(R.id.image_next) ImageView imageNext;
 
   Store<GenreState> genreStateStore;
 
@@ -66,6 +69,8 @@ public class ChooseGenreActivity extends BaseActivity {
 
     genreRecyclerAdapter = new GenreRecyclerAdapter(genreStateStore);
     recyclerGenre.setAdapter(genreRecyclerAdapter);
+
+    imageNext.setOnClickListener(v -> Toast.makeText(this, "clicked!", Toast.LENGTH_SHORT).show());
   }
 
   @Override protected void subscribeStore() {
