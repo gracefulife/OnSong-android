@@ -7,6 +7,7 @@ buildscript {
             'buildTools'    : '27.0.3',
             'supportLibrary': '27.1.1',
             'constraint'    : '1.1.2',
+            'flexbox'       : '1.0.0',
             'grox'          : '1.1.1',
             'glide'         : '4.7.1',
             'firebase'      : '11.8.0',
@@ -55,6 +56,7 @@ buildscript {
             okhttp              : ['logging': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",],
 
             constraint          : "com.android.support.constraint:constraint-layout:${versions.constraint}",
+            flexbox             : "com.google.android:flexbox:${versions.flexbox}",
             'support'           : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
                                    'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
                                    'design'    : "com.android.support:design:${versions.supportLibrary}",],

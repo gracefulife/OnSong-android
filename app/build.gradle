@@ -37,6 +37,7 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.annotation
     implementation deps.constraint
+    implementation deps.flexbox
 
     implementation deps.threetenabp
     implementation deps.stream
