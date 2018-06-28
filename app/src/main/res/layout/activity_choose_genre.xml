@@ -8,6 +8,7 @@
     tools:context=".genre.ChooseGenreActivity">
 
     <TextView
+        android:id="@+id/text_want"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -17,4 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="당신의\n취향을\n알고싶어요." />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_want" />
+
 </android.support.constraint.ConstraintLayout>
