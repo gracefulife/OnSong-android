@@ -1,16 +1,9 @@
 package com.depromeet.onsong.genre;
 
-import android.support.annotation.DrawableRes;
-import android.util.Pair;
-
-import com.annimon.stream.Optional;
-
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**

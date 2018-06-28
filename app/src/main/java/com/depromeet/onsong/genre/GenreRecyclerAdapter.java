@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.depromeet.onsong.R;
-
-import java.util.List;
+import com.groupon.grox.Store;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GenreRecyclerAdapter extends RecyclerView.Adapter<GenreRecyclerAdapter.ViewHolder> {
-  List<String> genres;
+  final Store<GenreState> genreStateStore;
 
   @NonNull
   @Override
@@ -28,11 +27,11 @@ public class GenreRecyclerAdapter extends RecyclerView.Adapter<GenreRecyclerAdap
   }
 
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    holder.textContents.setText(String.format("#%s", genres.get(position)));
+    holder.textContents.setText(String.format("#%s", genreStateStore.getState().genres.get(position)));
   }
 
   @Override public int getItemCount() {
-    return genres == null ? 0 : genres.size();
+    return genreStateStore.getState().genres.size();
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {

@@ -29,7 +29,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-public class StoreTest {
+public class GenreStoreTest {
 
   @Test
   public void grox_스테이트동작_테스트() {
