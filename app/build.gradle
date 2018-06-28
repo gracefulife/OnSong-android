@@ -48,6 +48,9 @@ dependencies {
     implementation deps.retrofit.rx
     implementation deps.okhttp.logging
 
+    implementation deps.calligraphy
+    implementation deps.viewpump
+
     implementation deps.lombok
     annotationProcessor deps.lombok
 

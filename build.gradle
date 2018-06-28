@@ -20,6 +20,10 @@ buildscript {
             'stream'        : '1.1.5',
             'threetenabp'   : '1.1.0',
 
+            'calligraphy'   : '3.0.0',
+            'viewpump'      : '1.0.0',
+
+
             'junit'         : '4.12',
             'testRunner'    : '1.0.2',
             'espresso'      : '3.0.2',
@@ -54,6 +58,9 @@ buildscript {
             'support'           : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
                                    'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
                                    'design'    : "com.android.support:design:${versions.supportLibrary}",],
+
+            calligraphy         : "io.github.inflationx:calligraphy3:${versions.calligraphy}",
+            viewpump            : "io.github.inflationx:viewpump:${versions.viewpump}",
 
             lombok              : "org.projectlombok:lombok:${versions.lombok}",
             butterknife         : "com.jakewharton:butterknife:${versions.butterknife}",
