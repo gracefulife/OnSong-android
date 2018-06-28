@@ -1,6 +1,7 @@
 package com.depromeet.onsong.genre;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,17 @@ public class GenreRecyclerAdapter extends RecyclerView.Adapter<GenreRecyclerAdap
     );
   }
 
-  @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    holder.textContents.setText(String.format("#%s", genreStateStore.getState().genres.get(position)));
+  @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    holder.textContents.setText(String.format("#%s", genreStateStore.getState().genres.get(position).genreName));
+    holder.textContents.setTextColor(
+        ContextCompat.getColor(
+            holder.textContents.getContext(),
+            genreStateStore.getState().chosen == position
+                ? R.color.genreContentsAccent : R.color.genreContentsPrimary
+        )
+    );
+
+    holder.textContents.setOnClickListener(v -> genreStateStore.dispatch(new ChooseGenreAction(position)));
   }
 
   @Override public int getItemCount() {

@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class GenreState {
   public final List<GenreColorPair> genres;
-  public final int selected;
+  public final int chosen;
 
   public static GenreState choose(List<GenreColorPair> genres, int selected) {
     return new GenreState(genres, selected);
@@ -24,7 +24,7 @@ public class GenreState {
   @EqualsAndHashCode
   @AllArgsConstructor
   public static class GenreColorPair {
-    public final String first;
-    public final Integer second;
+    public final String genreName;
+    public final Integer genreDrawableRes;
   }
 }

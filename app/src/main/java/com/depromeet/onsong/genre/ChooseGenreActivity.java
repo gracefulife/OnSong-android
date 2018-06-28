@@ -35,6 +35,8 @@ public class ChooseGenreActivity extends BaseActivity {
 
   Store<GenreState> genreStateStore;
 
+  GenreRecyclerAdapter genreRecyclerAdapter;
+
   @Override protected int getLayoutRes() {
     return R.layout.activity_choose_genre;
   }
@@ -62,13 +64,16 @@ public class ChooseGenreActivity extends BaseActivity {
     layoutManager.setFlexWrap(FlexWrap.WRAP);
     recyclerGenre.setLayoutManager(layoutManager);
 
-    GenreRecyclerAdapter genreRecyclerAdapter = new GenreRecyclerAdapter(genreStateStore);
+    genreRecyclerAdapter = new GenreRecyclerAdapter(genreStateStore);
     recyclerGenre.setAdapter(genreRecyclerAdapter);
   }
 
   @Override protected void subscribeStore() {
-    genreStateStore.subscribe(state -> layoutMain.setBackground(
-        ContextCompat.getDrawable(this, state.genres.get(state.selected).second)
-    ));
+    genreStateStore.subscribe(state -> {
+      layoutMain.setBackground(
+          ContextCompat.getDrawable(this, state.genres.get(state.chosen).genreDrawableRes)
+      );
+      genreRecyclerAdapter.notifyDataSetChanged();
+    });
   }
 }

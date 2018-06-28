@@ -19,9 +19,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.depromeet.onsong.genre.ChooseGenreAction;
 import com.depromeet.onsong.genre.GenreState;
-import com.groupon.grox.Action;
 import com.groupon.grox.Store;
-import com.groupon.grox.Store.Middleware;
 
 import org.junit.Test;
 
@@ -45,8 +43,8 @@ public class GenreStoreTest {
     GenreState state = store.getState();
 
     //THEN
-    assertThat(state.selected, is(0));
-    assertThat(state.genres.get(state.selected).first, is("ballad"));
+    assertThat(state.chosen, is(0));
+    assertThat(state.genres.get(state.chosen).genreName, is("ballad"));
   }
 
   @Test
@@ -64,8 +62,8 @@ public class GenreStoreTest {
     GenreState state = store.getState();
 
     //THEN
-    assertThat(state.selected, is(1));
-    assertThat(state.genres.get(state.selected).first, is("rnb"));
+    assertThat(state.chosen, is(1));
+    assertThat(state.genres.get(state.chosen).genreName, is("rnb"));
   }
 
   @Test
@@ -83,8 +81,8 @@ public class GenreStoreTest {
     GenreState state = store.getState();
 
     //THEN
-    assertThat(state.selected, is(1));
-    assertThat(state.genres.get(state.selected).first, is("rnb"));
+    assertThat(state.chosen, is(1));
+    assertThat(state.genres.get(state.chosen).genreName, is("rnb"));
   }
 
 }
