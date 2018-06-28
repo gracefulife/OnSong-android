@@ -31,4 +31,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_want" />
 
+    <ImageView
+        android:id="@+id/image_next"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_next_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
