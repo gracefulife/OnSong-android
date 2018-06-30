@@ -5,7 +5,10 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
@@ -20,20 +23,13 @@ import com.groupon.grox.Store;
 
 import java.util.Collections;
 
-import butterknife.BindDrawable;
 import butterknife.BindView;
 
-public class ChooseGenreActivity extends BaseActivity {
-  @BindDrawable(R.drawable.gradient_ballad) Drawable gradientBallad;
-  @BindDrawable(R.drawable.gradient_dance) Drawable gradientDance;
-  @BindDrawable(R.drawable.gradient_hiphop) Drawable gradientHiphop;
-  @BindDrawable(R.drawable.gradient_indie) Drawable gradientIndie;
-  @BindDrawable(R.drawable.gradient_jazz) Drawable gradientJazz;
-  @BindDrawable(R.drawable.gradient_pop) Drawable gradientPop;
-  @BindDrawable(R.drawable.gradient_rnb) Drawable gradientRnb;
-  @BindDrawable(R.drawable.gradient_rock) Drawable gradientRock;
+import static com.depromeet.onsong.utils.SpannableUtils.toSpannable;
 
+public class ChooseGenreActivity extends BaseActivity {
   @BindView(R.id.layout_main) ConstraintLayout layoutMain;
+  @BindView(R.id.text_want) TextView textWant;
   @BindView(R.id.recycler_genre) RecyclerView recyclerGenre;
   @BindView(R.id.image_next) ImageView imageNext;
 
@@ -62,6 +58,15 @@ public class ChooseGenreActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
+    String title = getString(R.string.genre_title);
+    textWant.setText(
+        toSpannable(this, title, "fonts/NotoSansKR-Bold-Hestia.otf",
+            TextUtils.indexOf(title, "취향"),
+            TextUtils.indexOf(title, "을")
+        ),
+        TextView.BufferType.SPANNABLE
+    );
+
     FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
     layoutManager.setFlexDirection(FlexDirection.ROW);
     layoutManager.setJustifyContent(JustifyContent.FLEX_START);
