@@ -72,6 +72,7 @@ public class ChooseGenreActivity extends BaseActivity {
     layoutManager.setJustifyContent(JustifyContent.FLEX_START);
     layoutManager.setFlexWrap(FlexWrap.WRAP);
     recyclerGenre.setLayoutManager(layoutManager);
+    recyclerGenre.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
     genreRecyclerAdapter = new GenreRecyclerAdapter(genreStateStore);
     recyclerGenre.setAdapter(genreRecyclerAdapter);
