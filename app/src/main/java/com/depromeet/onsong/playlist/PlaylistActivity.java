@@ -115,6 +115,11 @@ public class PlaylistActivity extends BaseActivity {
     playlistStateStore.subscribe(newState -> {
       Log.i(TAG, "subscribeStore: subscribe" + newState.chosen);
 
+      textMusicTitle.setText(newState.musics.get(newState.chosen).title);
+      textMusicArtist.setText(newState.musics.get(newState.chosen).artist);
+//      textMusicRecordTime.setText(newState.musics.get(newState.chosen).title);
+//      textMusicLength.setText(String.newState.musics.get(newState.chosen).length); format
+
       Glide.with(this)
           .asBitmap()
           .load(drawables[newState.chosen % drawables.length])
