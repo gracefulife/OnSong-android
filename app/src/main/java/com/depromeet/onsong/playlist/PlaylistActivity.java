@@ -2,9 +2,12 @@ package com.depromeet.onsong.playlist;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -90,6 +93,12 @@ public class PlaylistActivity extends BaseActivity {
       public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
         if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+          // filter invalid index
+          int position = layoutManager.findLastCompletelyVisibleItemPosition();
+          if (0 > position || position >= playlistStateStore.getState().musics.size()) {
+            return;
+          }
+
           if (playlistStateStore.getState().chosen != layoutManager.findLastCompletelyVisibleItemPosition()) {
             playlistStateStore.dispatch(new ChooseMusicAction(layoutManager.findLastCompletelyVisibleItemPosition()));
           }
@@ -116,7 +125,16 @@ public class PlaylistActivity extends BaseActivity {
                 @NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
               BitmapDrawable background = new BitmapDrawable(getResources(), resource);
               background.setColorFilter(ColorFilter.applyLightness(30));
-              layoutPlaylist.setBackground(background);
+
+              Drawable currentDrawable = layoutPlaylist.getBackground() == null ?
+                  ContextCompat.getDrawable(layoutPlaylist.getContext(), R.color.genreContentsAccent) : layoutPlaylist.getBackground();
+
+              TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{
+                  currentDrawable, background
+              });
+              transitionDrawable.setCrossFadeEnabled(true);
+              layoutPlaylist.setBackground(transitionDrawable);
+              transitionDrawable.startTransition(400);
             }
           });
     });
