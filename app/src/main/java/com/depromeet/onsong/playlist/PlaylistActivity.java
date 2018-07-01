@@ -1,11 +1,8 @@
 package com.depromeet.onsong.playlist;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -29,13 +26,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.onsong.genre.ChooseGenreActivity;
-import com.depromeet.onsong.genre.GenreRecyclerAdapter;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
