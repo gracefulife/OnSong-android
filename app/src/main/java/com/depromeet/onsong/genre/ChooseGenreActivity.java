@@ -1,7 +1,5 @@
 package com.depromeet.onsong.genre;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +13,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
+import com.depromeet.onsong.playlist.PlaylistActivity;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -26,6 +25,7 @@ import java.util.Collections;
 import butterknife.BindView;
 
 import static com.depromeet.onsong.utils.SpannableUtils.toSpannable;
+import static com.depromeet.onsong.utils.TransitionUtils.transitionOnBackground;
 
 public class ChooseGenreActivity extends BaseActivity {
   @BindView(R.id.layout_main) ConstraintLayout layoutMain;
@@ -77,21 +77,21 @@ public class ChooseGenreActivity extends BaseActivity {
     genreRecyclerAdapter = new GenreRecyclerAdapter(genreStateStore);
     recyclerGenre.setAdapter(genreRecyclerAdapter);
 
-    imageNext.setOnClickListener(v -> Toast.makeText(this, "clicked!", Toast.LENGTH_SHORT).show());
+    imageNext.setOnClickListener(v ->
+        startActivity(PlaylistActivity.intent(this,
+            genreStateStore.getState().genres
+                .get(genreStateStore.getState().chosen))
+        )
+    );
   }
 
   @Override protected void subscribeStore() {
     genreStateStore.subscribe(state -> {
-      Drawable currentDrawable = layoutMain.getBackground() == null ?
-          ContextCompat.getDrawable(this, R.color.genreContentsAccent) : layoutMain.getBackground();
-
-      TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{
-          currentDrawable, ContextCompat.getDrawable(this, state.genres.get(state.chosen).genreDrawableRes)
-      });
-      transitionDrawable.setCrossFadeEnabled(true);
-      layoutMain.setBackground(transitionDrawable);
-      transitionDrawable.startTransition(400);
-
+      transitionOnBackground(
+          layoutMain,
+          ContextCompat.getDrawable(this, R.color.genreContentsAccent),
+          ContextCompat.getDrawable(this, state.genres.get(state.chosen).genreDrawableRes)
+      );
       genreRecyclerAdapter.notifyDataSetChanged();
     });
   }

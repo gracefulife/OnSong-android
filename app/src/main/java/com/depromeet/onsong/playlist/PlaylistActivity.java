@@ -1,5 +1,7 @@
 package com.depromeet.onsong.playlist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -8,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +29,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
+import com.depromeet.onsong.genre.ChooseGenreActivity;
 import com.depromeet.onsong.genre.GenreRecyclerAdapter;
+import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
 
@@ -36,9 +41,11 @@ import butterknife.BindView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.depromeet.onsong.utils.TransitionUtils.transitionOnBackground;
 
 public class PlaylistActivity extends BaseActivity {
   private static final String TAG = PlaylistActivity.class.getSimpleName();
+  private static final String PARAM_GENRE = "genre";
 
   @BindView(R.id.layout_playlist) ConstraintLayout layoutPlaylist;
   @BindView(R.id.image_prev) ImageView imagePrev;
@@ -123,20 +130,20 @@ public class PlaylistActivity extends BaseActivity {
             @Override
             public void onResourceReady(
                 @NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-              BitmapDrawable background = new BitmapDrawable(getResources(), resource);
-              background.setColorFilter(ColorFilter.applyLightness(30));
-
-              Drawable currentDrawable = layoutPlaylist.getBackground() == null ?
-                  ContextCompat.getDrawable(layoutPlaylist.getContext(), R.color.genreContentsAccent) : layoutPlaylist.getBackground();
-
-              TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{
-                  currentDrawable, background
-              });
-              transitionDrawable.setCrossFadeEnabled(true);
-              layoutPlaylist.setBackground(transitionDrawable);
-              transitionDrawable.startTransition(400);
+              BitmapDrawable blurredDrawable = new BitmapDrawable(getResources(), resource);
+              blurredDrawable.setColorFilter(ColorFilter.applyLightness(30));
+              transitionOnBackground(
+                  layoutPlaylist,
+                  ContextCompat.getDrawable(layoutPlaylist.getContext(), R.color.genreContentsAccent),
+                  blurredDrawable
+              );
             }
           });
     });
+  }
+
+  public static Intent intent(AppCompatActivity activity, GenreState.GenreColorPair genreColorPair) {
+    return new Intent(activity, PlaylistActivity.class)
+        .putExtra(PARAM_GENRE, genreColorPair);
   }
 }

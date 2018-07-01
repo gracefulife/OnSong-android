@@ -1,5 +1,6 @@
 package com.depromeet.onsong.genre;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class GenreState {
   @ToString
   @EqualsAndHashCode
   @AllArgsConstructor
-  public static class GenreColorPair {
+  public static class GenreColorPair implements Serializable {
     public final String genreName;
     public final Integer genreDrawableRes;
   }
