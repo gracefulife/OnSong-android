@@ -4,12 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="onSongPink">#ff628b</color>
-    <color name="onSongYellow">#ffcb87</color>
-    <color name="onSongMelon">#69e8cb</color>
-    <color name="onSongBlue">#6ab2ff</color>
-    <color name="onSongPurple">#977aed</color>
-
+    <color name="onSongPinkEb42">#eb42a2</color>
+    <color name="onSongPinkEb44">#eb44a5</color>
+    <color name="onSongBlueA0">#a0c2d3</color>
+    <color name="onSongBlue4a">#4a29f1</color>
+    <color name="onSongYellow">#fcc967</color>
+    <color name="onSongMelon">#9fede1</color>
+    <color name="onSongPinkFE">#fecdd1</color>
 
     <color name="genreContentsAccent">#FFFFFF</color>
     <color name="genreContentsPrimary">#4DFFFFFF</color>
