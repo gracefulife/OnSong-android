@@ -20,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     setContentView(getLayoutRes());
     compositeDisposable = new CompositeDisposable();
 
+    initTitle();
     initStore();
     initView();
     subscribeStore();
@@ -28,6 +29,9 @@ public abstract class BaseActivity extends AppCompatActivity {
   @Override public void setContentView(int layoutResID) {
     super.setContentView(layoutResID);
     ButterKnife.bind(this);
+  }
+
+  protected void initTitle() {
   }
 
   protected abstract void initStore();

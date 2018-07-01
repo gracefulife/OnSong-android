@@ -11,6 +11,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi versions.compileSdk as int
+        renderscriptSupportModeEnabled true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -30,6 +33,7 @@ dependencies {
     implementation deps.grox_command
 
     implementation deps.glide
+    implementation deps.glide_transformations
     annotationProcessor deps.glide_compiler
     implementation deps.blurry
 
@@ -37,6 +41,7 @@ dependencies {
     implementation deps.support.compat
     implementation deps.support.design
     implementation deps.support.annotation
+    implementation deps.support.palette
     implementation deps.constraint
     implementation deps.flexbox
 
