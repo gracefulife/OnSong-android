@@ -10,6 +10,7 @@ buildscript {
             'flexbox'       : '1.0.0',
             'grox'          : '1.1.1',
             'glide'         : '4.7.1',
+            'blurry'        : '2.1.1',
             'firebase'      : '11.8.0',
             'firebaseUi'    : '3.2.2',
             'rx'            : '2.1.11',
@@ -49,6 +50,7 @@ buildscript {
             rxbinding           : "com.jakewharton.rxbinding2:rxbinding:${versions.rxBinding}",
             glide               : "com.github.bumptech.glide:glide:${versions.glide}",
             glide_compiler      : "com.github.bumptech.glide:compiler:${versions.glide}",
+            blurry              : "jp.wasabeef:blurry:${versions.blurry}",
 
             retrofit            : ['core': "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                                    'json': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
