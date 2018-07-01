@@ -16,8 +16,8 @@ public class GenreState {
   public final List<GenreColorPair> genres;
   public final int chosen;
 
-  public static GenreState choose(List<GenreColorPair> genres, int selected) {
-    return new GenreState(genres, selected);
+  public static GenreState choose(List<GenreColorPair> genres, int chosen) {
+    return new GenreState(genres, chosen);
   }
 
   @ToString
