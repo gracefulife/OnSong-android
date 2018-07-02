@@ -16,5 +16,6 @@
     <color name="genreContentsPrimary">#4DFFFFFF</color>
 
     <color name="whiteA8">#0DFFFFFF</color>
+    <color name="blackA8">#0DFFFFFF</color>
 
 </resources>

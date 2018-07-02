@@ -129,7 +129,7 @@ public class PlaylistActivity extends BaseActivity {
             public void onResourceReady(
                 @NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
               BitmapDrawable blurredDrawable = new BitmapDrawable(getResources(), resource);
-              blurredDrawable.setColorFilter(ColorFilter.applyLightness(30));
+              blurredDrawable.setColorFilter(ColorFilter.applyLightness(24));
               transitionOnBackground(
                   layoutPlaylist,
                   ContextCompat.getDrawable(layoutPlaylist.getContext(), R.color.genreContentsAccent),
