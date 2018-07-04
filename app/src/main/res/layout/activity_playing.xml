@@ -21,9 +21,12 @@
         android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="420dp"
+        android:minHeight="440dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/onSongBlue4a"
-        tools:layout_height="300dp">
+        tools:layout_height="440dp">
 
         <ImageView
             android:id="@+id/image_album_cover"
