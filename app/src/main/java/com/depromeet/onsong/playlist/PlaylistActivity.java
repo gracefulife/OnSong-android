@@ -119,7 +119,9 @@ public class PlaylistActivity extends BaseActivity {
               Intent intent = PlayingActivity.intent(this, playlistStateStore.getState().musics.get(positionViewPair.first));
               ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                   this,
-                  new Pair<>(positionViewPair.second, PlayingActivity.VIEW_NAME_HEADER_IMAGE)
+                  new Pair<>(positionViewPair.second, PlayingActivity.VIEW_NAME_HEADER_IMAGE),
+                  new Pair<>(textMusicArtist, PlayingActivity.VIEW_NAME_HEADER_ARTIST),
+                  new Pair<>(textMusicTitle, PlayingActivity.VIEW_NAME_HEADER_MUSIC)
               );
 
               // Now we can start the Activity, providing the activity options as a bundle

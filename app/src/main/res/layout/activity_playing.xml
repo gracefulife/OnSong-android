@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".detail.PlayingActivity">
@@ -17,8 +18,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.depromeet.onsong.widget.SquareFrameLayout
+        android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="400dp"
         tools:background="@color/onSongBlue4a"
         tools:layout_height="300dp">
 
@@ -28,4 +31,95 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
     </com.depromeet.onsong.widget.SquareFrameLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_player"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:maxHeight="200dp"
+        android:minHeight="160dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_container">
+
+        <ImageView
+            android:id="@+id/image_music_info"
+            android:layout_width="@dimen/icon_medium"
+            android:layout_height="@dimen/icon_medium"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/btn_music_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_like"
+            android:layout_width="@dimen/icon_medium"
+            android:layout_height="@dimen/icon_medium"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_music_info" />
+
+        <TextView
+            android:id="@+id/text_music_title"
+            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:gravity="bottom"
+            android:text="Whatever"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_music_info"
+            tools:text="Whatever" />
+
+        <TextView
+            android:id="@+id/text_music_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Ugly Duck"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="@id/text_music_title"
+            app:layout_constraintStart_toStartOf="@id/text_music_title"
+            app:layout_constraintTop_toBottomOf="@id/text_music_title"
+            tools:text="Ugly Duck" />
+
+        <ImageView
+            android:id="@+id/image_play_or_pause"
+            android:layout_width="@dimen/icon_medium"
+            android:layout_height="@dimen/icon_medium"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/btn_play"
+            app:layout_constraintEnd_toEndOf="@id/text_music_artist"
+            app:layout_constraintStart_toStartOf="@id/text_music_artist"
+            app:layout_constraintTop_toBottomOf="@id/text_music_artist" />
+
+        <ImageView
+            android:id="@+id/image_prev_music"
+            android:layout_width="@dimen/icon_medium"
+            android:layout_height="@dimen/icon_medium"
+            android:layout_marginStart="10dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/btn_skip_back"
+            app:layout_constraintStart_toEndOf="@id/image_music_info"
+            app:layout_constraintTop_toTopOf="@id/image_play_or_pause" />
+
+        <ImageView
+            android:id="@+id/image_next_music"
+            android:layout_width="@dimen/icon_medium"
+            android:layout_height="@dimen/icon_medium"
+            android:layout_marginEnd="10dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/btn_skip_forward"
+            app:layout_constraintEnd_toStartOf="@id/image_like"
+            app:layout_constraintTop_toTopOf="@id/image_play_or_pause" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
