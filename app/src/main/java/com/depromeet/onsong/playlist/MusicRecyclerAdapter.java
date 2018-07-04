@@ -2,6 +2,7 @@ package com.depromeet.onsong.playlist;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MusicRecyclerAdapter extends RecyclerView.Adapter<MusicRecyclerAdapter.ViewHolder> {
   // Event provider. TODO dispose
-  public final PublishSubject<Integer> onItemClickedEventProvider = PublishSubject.create();
+  public final PublishSubject<Pair<Integer, View>> onItemClickedEventProvider = PublishSubject.create();
 
   @lombok.NonNull final Store<PlaylistState> playlistStateStore;
 
@@ -43,7 +44,7 @@ public class MusicRecyclerAdapter extends RecyclerView.Adapter<MusicRecyclerAdap
     holder.imageAlbum.setOnClickListener(v -> {
       // 현재 아이템 클릭
       if (playlistStateStore.getState().chosen == position) {
-        onItemClickedEventProvider.onNext(position);
+        onItemClickedEventProvider.onNext(new Pair<>(position, holder.imageAlbum));
         return;
       }
 

@@ -6,7 +6,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -26,6 +29,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
+import com.depromeet.onsong.detail.PlayingActivity;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
@@ -111,9 +115,16 @@ public class PlaylistActivity extends BaseActivity {
     compositeDisposable.add(
         musicRecyclerAdapter.onItemClickedEventProvider
             .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe(i -> {
-              Log.i(TAG, "initView: onCLicked item = " + i);
-              Log.i(TAG, "initView: transition start");
+            .subscribe(positionViewPair -> {
+              Log.i(TAG, "initView: viewHolder is = " + positionViewPair.second);
+              Intent intent = PlayingActivity.intent(this, playlistStateStore.getState().musics.get(positionViewPair.first));
+              ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                  this,
+                  new Pair<>(positionViewPair.second, PlayingActivity.VIEW_NAME_HEADER_IMAGE)
+              );
+
+              // Now we can start the Activity, providing the activity options as a bundle
+              ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
             })
     );
   }
