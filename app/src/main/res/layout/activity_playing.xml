@@ -21,7 +21,7 @@
         android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="400dp"
+        android:minHeight="420dp"
         tools:background="@color/onSongBlue4a"
         tools:layout_height="300dp">
 
@@ -32,6 +32,18 @@
             android:scaleType="centerCrop" />
     </com.depromeet.onsong.widget.SquareFrameLayout>
 
+    <SeekBar
+        android:id="@+id/seekbar_music"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:progressTint="@color/blackE9"
+        android:thumbTint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_container" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_player"
         android:layout_width="match_parent"
@@ -41,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_container">
+        app:layout_constraintTop_toBottomOf="@id/seekbar_music">
 
         <ImageView
             android:id="@+id/image_music_info"
