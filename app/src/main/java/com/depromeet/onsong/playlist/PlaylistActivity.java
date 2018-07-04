@@ -31,6 +31,8 @@ import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -105,6 +107,15 @@ public class PlaylistActivity extends BaseActivity {
         }
       }
     });
+
+    compositeDisposable.add(
+        musicRecyclerAdapter.onItemClickedEventProvider
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(i -> {
+              Log.i(TAG, "initView: onCLicked item = " + i);
+              Log.i(TAG, "initView: transition start");
+            })
+    );
   }
 
   @Override protected void subscribeStore() {
