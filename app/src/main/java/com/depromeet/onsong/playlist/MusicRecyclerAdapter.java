@@ -13,11 +13,15 @@ import com.groupon.grox.Store;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lombok.AllArgsConstructor;
+import io.reactivex.subjects.PublishSubject;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MusicRecyclerAdapter extends RecyclerView.Adapter<MusicRecyclerAdapter.ViewHolder> {
-  final Store<PlaylistState> playlistStateStore;
+  // Event provider. TODO dispose
+  public final PublishSubject<Integer> onItemClickedEventProvider = PublishSubject.create();
+
+  @lombok.NonNull final Store<PlaylistState> playlistStateStore;
 
   @NonNull
   @Override
@@ -35,7 +39,15 @@ public class MusicRecyclerAdapter extends RecyclerView.Adapter<MusicRecyclerAdap
     Glide.with(holder.imageAlbum)
         .load(drawables[position % drawables.length])
         .into(holder.imageAlbum);
-    // holder.imageAlbum.setOnClickListener(v -> playlistStateStore.dispatch(new ChooseMusicAction(position))); 클릭 + 스냅핑
+
+    holder.imageAlbum.setOnClickListener(v -> {
+      // 클릭 + 스냅핑
+      if (playlistStateStore.getState().chosen == position) {
+        onItemClickedEventProvider.onNext(position);
+        return;
+      }
+      playlistStateStore.dispatch(new ChooseMusicAction(position));
+    });
   }
 
   @Override public int getItemCount() {
