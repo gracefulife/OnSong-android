@@ -12,10 +12,15 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class PlaylistState {
+  public static final String SCROLL_BY_SELECTION = "selection";
+  public static final String SCROLL_BY_SNAP = "snap";
+  public static final String SCROLL_BY_EMPTY = "";
+
   public final List<Music> musics;
   public final int chosen;
+  public final String scrollBy;
 
-  public static PlaylistState choose(List<Music> musics, int chosen) {
-    return new PlaylistState(musics, chosen);
+  public static PlaylistState choose(List<Music> musics, int chosen, String scrollBy) {
+    return new PlaylistState(musics, chosen, scrollBy);
   }
 }

@@ -41,12 +41,14 @@ public class MusicRecyclerAdapter extends RecyclerView.Adapter<MusicRecyclerAdap
         .into(holder.imageAlbum);
 
     holder.imageAlbum.setOnClickListener(v -> {
-      // 클릭 + 스냅핑
+      // 현재 아이템 클릭
       if (playlistStateStore.getState().chosen == position) {
         onItemClickedEventProvider.onNext(position);
         return;
       }
-      playlistStateStore.dispatch(new ChooseMusicAction(position));
+
+      // 다음 or 이전 아이템 클릭
+      playlistStateStore.dispatch(new ChooseMusicBySelectionAction(position));
     });
   }
 

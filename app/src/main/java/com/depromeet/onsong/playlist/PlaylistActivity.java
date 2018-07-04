@@ -32,10 +32,10 @@ import com.groupon.grox.Store;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.depromeet.onsong.playlist.PlaylistState.SCROLL_BY_SELECTION;
 import static com.depromeet.onsong.utils.TransitionUtils.transitionOnBackground;
 
 public class PlaylistActivity extends BaseActivity {
@@ -73,7 +73,7 @@ public class PlaylistActivity extends BaseActivity {
                 new Music("So what", "Beenzino", "HipHop", "", 60),
                 new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
                 new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
-            ).collect(Collectors.toList()), 0
+            ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
     );
   }
@@ -102,7 +102,7 @@ public class PlaylistActivity extends BaseActivity {
           }
 
           if (playlistStateStore.getState().chosen != layoutManager.findLastCompletelyVisibleItemPosition()) {
-            playlistStateStore.dispatch(new ChooseMusicAction(layoutManager.findLastCompletelyVisibleItemPosition()));
+            playlistStateStore.dispatch(new ChooseMusicBySnapAction(layoutManager.findLastCompletelyVisibleItemPosition()));
           }
         }
       }
@@ -125,6 +125,10 @@ public class PlaylistActivity extends BaseActivity {
 
     playlistStateStore.subscribe(newState -> {
       Log.i(TAG, "subscribeStore: subscribe" + newState.chosen);
+
+      if (newState.scrollBy.equals(SCROLL_BY_SELECTION)) {
+        recyclerMusic.smoothScrollToPosition(newState.chosen);
+      }
 
       textMusicTitle.setText(newState.musics.get(newState.chosen).title);
       textMusicArtist.setText(newState.musics.get(newState.chosen).artist);

@@ -5,11 +5,11 @@ import com.groupon.grox.Action;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class ChooseMusicAction implements Action<PlaylistState> {
+public class ChooseMusicBySelectionAction implements Action<PlaylistState> {
   private final int chosen;
 
   @Override
   public PlaylistState newState(PlaylistState oldState) {
-    return PlaylistState.choose(oldState.musics, chosen);
+    return PlaylistState.choose(oldState.musics, chosen, PlaylistState.SCROLL_BY_SELECTION);
   }
 }

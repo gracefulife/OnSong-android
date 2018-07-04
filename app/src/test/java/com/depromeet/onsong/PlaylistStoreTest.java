@@ -17,7 +17,7 @@ package com.depromeet.onsong;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.depromeet.onsong.playlist.ChooseMusicAction;
+import com.depromeet.onsong.playlist.ChooseMusicBySnapAction;
 import com.depromeet.onsong.playlist.Music;
 import com.depromeet.onsong.playlist.PlaylistState;
 import com.groupon.grox.Store;
@@ -39,7 +39,7 @@ public class PlaylistStoreTest {
                 new Music("So what", "Beenzino", "HipHop", "", 60),
                 new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
                 new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
-            ).collect(Collectors.toList()), 0
+            ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
     );
 
@@ -61,12 +61,12 @@ public class PlaylistStoreTest {
                 new Music("So what", "Beenzino", "HipHop", "", 60),
                 new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
                 new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
-            ).collect(Collectors.toList()), 0
+            ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
     );
 
     //WHEN
-    store.dispatch(oldState -> new PlaylistState(oldState.musics, 1));
+    store.dispatch(oldState -> new PlaylistState(oldState.musics, 1, PlaylistState.SCROLL_BY_SNAP));
     PlaylistState state = store.getState();
 
     //THEN
@@ -84,12 +84,12 @@ public class PlaylistStoreTest {
                 new Music("So what", "Beenzino", "HipHop", "", 60),
                 new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
                 new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
-            ).collect(Collectors.toList()), 0
+            ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_SNAP
         )
     );
 
     //WHEN
-    store.dispatch(new ChooseMusicAction(1));
+    store.dispatch(new ChooseMusicBySnapAction(1));
     PlaylistState state = store.getState();
 
     //THEN
