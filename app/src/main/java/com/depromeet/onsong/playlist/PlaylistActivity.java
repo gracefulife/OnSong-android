@@ -116,7 +116,10 @@ public class PlaylistActivity extends BaseActivity {
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(positionViewPair -> {
               Log.i(TAG, "initView: viewHolder is = " + positionViewPair.second);
-              Intent intent = PlayingActivity.intent(this, playlistStateStore.getState().musics.get(positionViewPair.first));
+              Intent intent = PlayingActivity.intent(this,
+                  playlistStateStore.getState().musics.get(positionViewPair.first),
+                  positionViewPair.first
+              );
               ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                   this,
                   new Pair<>(positionViewPair.second, PlayingActivity.VIEW_NAME_HEADER_IMAGE),

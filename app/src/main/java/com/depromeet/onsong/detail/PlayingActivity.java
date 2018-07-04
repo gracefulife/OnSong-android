@@ -36,6 +36,7 @@ public class PlayingActivity extends BaseActivity {
   };
 
   public static final String PARAM_MUSIC = "music";
+  public static final String PARAM_TEMP_POSITION = "position"; // TODO 네트워크 연결 후 삭제
   public static final String VIEW_NAME_HEADER_IMAGE = "image";
   public static final String VIEW_NAME_HEADER_MUSIC = "music";
   public static final String VIEW_NAME_HEADER_ARTIST = "artist";
@@ -54,6 +55,7 @@ public class PlayingActivity extends BaseActivity {
   @BindView(R.id.layout_background) ConstraintLayout layoutBackground;
 
   Music chosenMusic;
+  int position;
 
   @Override protected int getLayoutRes() {
     return R.layout.activity_playing;
@@ -64,12 +66,22 @@ public class PlayingActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    chosenMusic = (Music) getIntent().getSerializableExtra(PARAM_MUSIC);
+    // set transition
     ViewCompat.setTransitionName(imageAlbumCover, VIEW_NAME_HEADER_IMAGE);
+    ViewCompat.setTransitionName(textMusicTitle, VIEW_NAME_HEADER_MUSIC);
+    ViewCompat.setTransitionName(textMusicArtist, VIEW_NAME_HEADER_ARTIST);
+
+    // load bundle data
+    chosenMusic = (Music) getIntent().getSerializableExtra(PARAM_MUSIC);
+    position = getIntent().getIntExtra(PARAM_TEMP_POSITION, 0);
+
+    // init view
+    textMusicTitle.setText(chosenMusic.title);
+    textMusicArtist.setText(chosenMusic.artist);
 
     Glide.with(this)
         .asBitmap()
-        .load(drawables[0])
+        .load(drawables[position % drawables.length])
         .apply(bitmapTransform(new BlurTransformation(70, 2)))
         .into(new SimpleTarget<Bitmap>() {
           @Override
@@ -111,17 +123,17 @@ public class PlayingActivity extends BaseActivity {
   private void loadThumbnail() {
     // TODO thumbnail
     Glide.with(imageAlbumCover)
-        .load(drawables[0])
+        .load(drawables[position % drawables.length])
         .into(imageAlbumCover);
   }
 
   private void loadFullSizeImage() {
     Glide.with(imageAlbumCover)
-        .load(drawables[0])
+        .load(drawables[position % drawables.length])
         .into(imageAlbumCover);
   }
 
-  public static Intent intent(AppCompatActivity activity, Music music) {
-    return new Intent(activity, PlayingActivity.class).putExtra(PARAM_MUSIC, music);
+  public static Intent intent(AppCompatActivity activity, Music music, int position) {
+    return new Intent(activity, PlayingActivity.class).putExtra(PARAM_MUSIC, music).putExtra(PARAM_TEMP_POSITION, position);
   }
 }
