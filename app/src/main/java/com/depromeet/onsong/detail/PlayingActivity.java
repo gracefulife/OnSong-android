@@ -1,13 +1,23 @@
 package com.depromeet.onsong.detail;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.depromeet.onsong.BaseActivity;
+import com.depromeet.onsong.R;
 
-public class PlayingActivity extends AppCompatActivity {
+public class PlayingActivity extends BaseActivity {
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_playing);
+  @Override protected int getLayoutRes() {
+    return R.layout.activity_playing;
+  }
+
+  @Override protected void initStore() {
+
+  }
+
+  @Override protected void initView() {
+
+  }
+
+  @Override protected void subscribeStore() {
+
   }
 }
