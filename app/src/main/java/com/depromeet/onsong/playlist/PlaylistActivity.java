@@ -47,7 +47,6 @@ public class PlaylistActivity extends BaseActivity {
   private static final String PARAM_GENRE = "genre";
 
   @BindView(R.id.layout_playlist) ConstraintLayout layoutPlaylist;
-  @BindView(R.id.image_prev) ImageView imagePrev;
   @BindView(R.id.text_title) TextView textTitle;
   @BindView(R.id.text_music_title) TextView textMusicTitle;
   @BindView(R.id.text_music_artist) TextView textMusicArtist;
