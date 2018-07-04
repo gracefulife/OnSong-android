@@ -10,17 +10,6 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_playlist">
 
-    <ImageView
-        android:id="@+id/image_prev"
-        android:layout_width="@dimen/icon_medium"
-        android:layout_height="@dimen/icon_medium"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:rotation="180"
-        android:src="@drawable/ic_next_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"

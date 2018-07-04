@@ -12,8 +12,6 @@
         android:layout_height="@dimen/icon_medium"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        android:rotation="180"
-
         android:src="@drawable/ic_left_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
