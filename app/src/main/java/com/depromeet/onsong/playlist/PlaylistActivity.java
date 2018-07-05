@@ -75,6 +75,10 @@ public class PlaylistActivity extends BaseActivity {
                 new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
                 new Music("So what", "Beenzino", "HipHop", "", 60),
                 new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
+                new Music("XXX", "Kendrick Lamar", "HipHop", "", 60),
+                new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
+                new Music("So what", "Beenzino", "HipHop", "", 60),
+                new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
                 new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
             ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
@@ -135,8 +139,10 @@ public class PlaylistActivity extends BaseActivity {
 
   @Override protected void subscribeStore() {
     final int[] drawables = new int[]{
-        R.drawable.img_album, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04
+        R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
+        R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
     };
+
 
     playlistStateStore.subscribe(newState -> {
       Log.i(TAG, "subscribeStore: subscribe" + newState.chosen);

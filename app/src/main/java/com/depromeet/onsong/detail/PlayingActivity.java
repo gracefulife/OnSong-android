@@ -32,7 +32,8 @@ public class PlayingActivity extends BaseActivity {
   private static final String TAG = PlayingActivity.class.getSimpleName();
 
   final int[] drawables = new int[]{
-      R.drawable.img_album, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04
+      R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
+      R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
   };
 
   public static final String PARAM_MUSIC = "music";
