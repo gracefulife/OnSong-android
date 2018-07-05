@@ -44,7 +44,6 @@ public class PlayingActivity extends BaseActivity {
 
   @BindView(R.id.image_album_cover) ImageView imageAlbumCover;
   @BindView(R.id.image_prev) ImageView imagePrev;
-  @BindView(R.id.layout_container) SquareFrameLayout layoutContainer;
   @BindView(R.id.image_music_info) ImageView imageMusicInfo;
   @BindView(R.id.image_like) ImageView imageLike;
   @BindView(R.id.text_music_title) TextView textMusicTitle;

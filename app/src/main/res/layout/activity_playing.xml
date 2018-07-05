@@ -17,23 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.depromeet.onsong.widget.SquareFrameLayout
-        android:id="@+id/layout_container"
+
+    <ImageView
+        android:id="@+id/image_album_cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="440dp"
+        android:minHeight="400dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_music"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/onSongBlue4a"
-        tools:layout_height="440dp">
-
-        <ImageView
-            android:id="@+id/image_album_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-    </com.depromeet.onsong.widget.SquareFrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/seekbar_music"
@@ -45,7 +39,7 @@
         android:thumbTint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_container" />
+        app:layout_constraintTop_toBottomOf="@id/image_album_cover" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_player"
