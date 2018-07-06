@@ -1,14 +1,17 @@
 package com.depromeet.onsong.home;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -114,13 +117,12 @@ public class HomeActivity extends BaseActivity
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
-    FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show());
-
     DrawerLayout drawer = findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+    toggle.getDrawerArrowDrawable().setColor(ContextCompat.getColor(this, R.color.black22));
+
     drawer.addDrawerListener(toggle);
     toggle.syncState();
 
@@ -129,6 +131,10 @@ public class HomeActivity extends BaseActivity
   }
 
   @Override protected void initView() {
+    FloatingActionButton fab = findViewById(R.id.fab);
+    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show());
+
     FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
     layoutManager.setFlexDirection(FlexDirection.ROW);
     layoutManager.setJustifyContent(JustifyContent.FLEX_START);

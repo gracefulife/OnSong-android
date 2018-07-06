@@ -5,5 +5,13 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor" tools:targetApi="23">@android:color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:actionBarStyle" tools:targetApi="23">@style/ActionBarStyle.Main</item>
+    </style>
+
+    <style name="ActionBarStyle" />
+
+    <style name="ActionBarStyle.Main">
+        <item name="colorControlNormal">@color/black22</item>
+        <item name="android:colorControlNormal">@color/black22</item>
     </style>
 </resources>

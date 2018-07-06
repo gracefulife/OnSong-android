@@ -14,4 +14,5 @@
     <string name="categorized_popular">Popular</string>
     <string name="categorized_new_artist">New Artist</string>
     <string name="on_live">On Live</string>
+    <string name="action_search">검색</string>
 </resources>
