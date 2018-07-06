@@ -1,4 +1,4 @@
-package com.depromeet.onsong.playlist;
+package com.depromeet.onsong.domain;
 
 import java.io.Serializable;
 
