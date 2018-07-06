@@ -9,4 +9,9 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="curated_for_you">For you</string>
+    <string name="curated_favorite">Favorite</string>
+    <string name="categorized_popular">Popular</string>
+    <string name="categorized_new_artist">New Artist</string>
+    <string name="on_live">On Live</string>
 </resources>
