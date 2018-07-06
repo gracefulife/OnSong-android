@@ -20,7 +20,6 @@ import com.depromeet.onsong.R;
 import com.depromeet.onsong.playlist.Music;
 import com.depromeet.onsong.utils.BetweenActivityTransitionListener;
 import com.depromeet.onsong.utils.ColorFilter;
-import com.depromeet.onsong.widget.SquareFrameLayout;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.BlurTransformation;

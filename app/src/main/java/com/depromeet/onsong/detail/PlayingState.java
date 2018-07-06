@@ -2,8 +2,6 @@ package com.depromeet.onsong.detail;
 
 import com.depromeet.onsong.playlist.Music;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
