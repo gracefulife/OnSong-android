@@ -8,7 +8,7 @@ buildscript {
             'supportLibrary'       : '27.1.1',
             'constraint'           : '1.1.2',
             'flexbox'              : '1.0.0',
-            'grox'                 : '1.1.1',
+            'grox'                 : '1.1.2',
             'glide'                : '4.7.1',
             'glide_transformations': '3.3.0',
             'blurry'               : '2.1.1',
