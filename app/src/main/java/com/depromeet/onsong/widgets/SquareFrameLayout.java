@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.depromeet.onsong.widget;
+package com.depromeet.onsong.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
