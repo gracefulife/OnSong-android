@@ -4,7 +4,6 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.depromeet.onsong.domain.LiveMusic;
 import com.depromeet.onsong.home.LiveMusicState;
-import com.depromeet.onsong.playlist.ChooseMusicBySnapAction;
 import com.groupon.grox.Store;
 
 import org.junit.Test;

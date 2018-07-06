@@ -3,4 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="genre_title">당신의\n취향을\n알고싶어요.</string>
     <string name="playlist_title">이런\n음악은\n어떠신가요?</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>
