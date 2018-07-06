@@ -30,6 +30,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.onsong.detail.PlayingActivity;
+import com.depromeet.onsong.domain.Music;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;

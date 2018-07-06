@@ -1,5 +1,7 @@
 package com.depromeet.onsong.playlist;
 
+import com.depromeet.onsong.domain.Music;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
