@@ -1,167 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".home.HomeActivity"
-    tools:showIn="@layout/app_bar_home">
+    android:layout_marginTop="?attr/actionBarSize">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_curated"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".home.HomeActivity"
+        tools:showIn="@layout/app_bar_home">
 
-        <View
-            android:id="@+id/line_curated_for_you"
-            android:layout_width="@dimen/line_medium"
-            android:layout_height="@dimen/line_height_medium"
-            android:background="@color/black22"
-            app:layout_constraintBottom_toBottomOf="@+id/text_curated_for_you"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_curated_for_you" />
-
-        <TextView
-            android:id="@+id/text_curated_for_you"
-            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:gravity="bottom"
-            android:text="@string/curated_for_you"
-            android:textColor="@color/black22"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/line_curated_for_you"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_curated_favorite"
-            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:gravity="bottom"
-            android:text="@string/curated_favorite"
-            android:textColor="@color/black22"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/text_curated_for_you"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_curated"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_curated"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_curated_for_you" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_categorized"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_curated">
-
-        <View
-            android:id="@+id/line_categorized_for_you"
-            android:layout_width="@dimen/line_medium"
-            android:layout_height="@dimen/line_height_medium"
-            android:background="@color/black22"
-            app:layout_constraintBottom_toBottomOf="@+id/text_categorized_popular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_categorized_popular" />
-
-        <TextView
-            android:id="@+id/text_categorized_popular"
-            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:gravity="bottom"
-            android:text="@string/categorized_popular"
-            android:textColor="@color/black22"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/line_categorized_for_you"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_categorized_new_artist"
-            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:gravity="bottom"
-            android:text="@string/categorized_new_artist"
-            android:textColor="@color/black22"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/text_categorized_popular"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_categorized"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_categorized_popular" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_on_live"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_categorized">
-
-        <View
-            android:id="@+id/line_on_live_for_you"
-            android:layout_width="@dimen/line_medium"
-            android:layout_height="@dimen/line_height_medium"
-            android:background="@color/black22"
-            app:layout_constraintBottom_toBottomOf="@+id/text_on_live_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_on_live_title" />
-
-        <TextView
-            android:id="@+id/text_on_live_title"
-            fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:gravity="bottom"
-            android:text="@string/on_live"
-            android:textColor="@color/black22"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/line_on_live_for_you"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/image_next"
-            android:layout_width="@dimen/icon_medium"
-            android:layout_height="@dimen/icon_medium"
-            android:src="@drawable/ic_btn_next_detail"
-            app:layout_constraintBottom_toBottomOf="@id/text_on_live_title"
+            android:layout_height="230dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_on_live_title" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_on_live"
+            <View
+                android:id="@+id/line_curated_for_you"
+                android:layout_width="@dimen/line_medium"
+                android:layout_height="@dimen/line_height_medium"
+                android:background="@color/black22"
+                app:layout_constraintBottom_toBottomOf="@+id/text_curated_for_you"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_curated_for_you" />
+
+            <TextView
+                android:id="@+id/text_curated_for_you"
+                fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_large"
+                android:gravity="bottom"
+                android:text="@string/curated_for_you"
+                android:textColor="@color/black22"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toEndOf="@id/line_curated_for_you"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_curated_favorite"
+                fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:gravity="bottom"
+                android:text="@string/curated_favorite"
+                android:textColor="@color/black22"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toEndOf="@id/text_curated_for_you"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_curated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_curated_for_you" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_categorized"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_curated">
+
+            <View
+                android:id="@+id/line_categorized_for_you"
+                android:layout_width="@dimen/line_medium"
+                android:layout_height="@dimen/line_height_medium"
+                android:background="@color/black22"
+                app:layout_constraintBottom_toBottomOf="@+id/text_categorized_popular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_categorized_popular" />
+
+            <TextView
+                android:id="@+id/text_categorized_popular"
+                fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_large"
+                android:gravity="bottom"
+                android:text="@string/categorized_popular"
+                android:textColor="@color/black22"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toEndOf="@id/line_categorized_for_you"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_categorized_new_artist"
+                fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:gravity="bottom"
+                android:text="@string/categorized_new_artist"
+                android:textColor="@color/black22"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toEndOf="@id/text_categorized_popular"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_categorized"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_categorized_popular" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_on_live"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_on_live_title" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_categorized">
+
+            <View
+                android:id="@+id/line_on_live_for_you"
+                android:layout_width="@dimen/line_medium"
+                android:layout_height="@dimen/line_height_medium"
+                android:background="@color/black22"
+                app:layout_constraintBottom_toBottomOf="@+id/text_on_live_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_on_live_title" />
+
+            <TextView
+                android:id="@+id/text_on_live_title"
+                fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_large"
+                android:gravity="bottom"
+                android:text="@string/on_live"
+                android:textColor="@color/black22"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toEndOf="@id/line_on_live_for_you"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_next"
+                android:layout_width="@dimen/icon_medium"
+                android:layout_height="@dimen/icon_medium"
+                android:src="@drawable/ic_btn_next_detail"
+                app:layout_constraintBottom_toBottomOf="@id/text_on_live_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_on_live_title" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_on_live"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_on_live_title" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>
