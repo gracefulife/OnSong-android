@@ -157,10 +157,7 @@ public class HomeActivity extends BaseActivity
     )));
 
     // categorized
-    FlexboxLayoutManager categorizedLayoutManager = new FlexboxLayoutManager(this);
-    categorizedLayoutManager.setFlexDirection(FlexDirection.COLUMN);
-    categorizedLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
-    categorizedLayoutManager.setFlexWrap(FlexWrap.WRAP);
+    LinearLayoutManager categorizedLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     recyclerCategorized.setLayoutManager(categorizedLayoutManager);
     recyclerCategorized.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
