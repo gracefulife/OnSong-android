@@ -25,10 +25,6 @@ import com.annimon.stream.Stream;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.onsong.domain.Music;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 import com.groupon.grox.Store;
 
 import java.util.ArrayList;
