@@ -65,7 +65,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_categorized"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_curated">
@@ -75,12 +75,12 @@
             android:layout_width="@dimen/line_medium"
             android:layout_height="@dimen/line_height_medium"
             android:background="@color/black22"
-            app:layout_constraintBottom_toBottomOf="@+id/text_categorized_for_you"
+            app:layout_constraintBottom_toBottomOf="@+id/text_categorized_popular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_categorized_for_you" />
+            app:layout_constraintTop_toTopOf="@id/text_categorized_popular" />
 
         <TextView
-            android:id="@+id/text_categorized_for_you"
+            android:id="@+id/text_categorized_popular"
             fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -93,7 +93,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_categorized_favorite"
+            android:id="@+id/text_categorized_new_artist"
             fontPath="fonts/NotoSansKR-Bold-Hestia.otf"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -102,7 +102,7 @@
             android:text="@string/categorized_new_artist"
             android:textColor="@color/black22"
             android:textSize="@dimen/text_large"
-            app:layout_constraintStart_toEndOf="@id/text_categorized_for_you"
+            app:layout_constraintStart_toEndOf="@id/text_categorized_popular"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
@@ -112,13 +112,14 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_categorized_for_you" />
+            app:layout_constraintTop_toBottomOf="@id/text_categorized_popular" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_on_live"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_categorized">

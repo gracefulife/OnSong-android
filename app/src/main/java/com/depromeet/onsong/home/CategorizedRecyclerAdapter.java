@@ -22,7 +22,7 @@ import io.reactivex.subjects.PublishSubject;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecyclerAdapter.ViewHolder> {
+public class CategorizedRecyclerAdapter extends RecyclerView.Adapter<CategorizedRecyclerAdapter.ViewHolder> {
   // Event provider. TODO dispose
   public final PublishSubject<Pair<Integer, View>> onItemClickedEventProvider = PublishSubject.create();
 
@@ -32,38 +32,38 @@ public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecycler
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     return new ViewHolder(
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_curated, parent, false)
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categorized, parent, false)
     );
   }
 
   @Override public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-    List<CuratedMusicState.CategoryMusicsPair> musicsPairs = curatedMusicStateStore.getState().curatedMusics;
+    List<CuratedMusicState.CategoryMusicsPair> musicsPairs = curatedMusicStateStore.getState().categorizedMusics;
     // TODO for you or favorite
-    List<Music> musics = musicsPairs.get(0).musics;
+    List<Music> musics = musicsPairs.get(1).musics;
 
     int[] drawables = new int[]{
         R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
         R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
     };
 
-    Glide.with(holder.imageAlbum)
+    Glide.with(holder.imageProfile)
         .load(drawables[position % drawables.length])
-        .into(holder.imageAlbum);
+        .into(holder.imageProfile);
 
-    holder.imageAlbum.setOnClickListener(v -> onItemClickedEventProvider.onNext(new Pair<>(position, holder.imageAlbum)));
+    holder.imageProfile.setOnClickListener(v -> onItemClickedEventProvider.onNext(new Pair<>(position, holder.imageProfile)));
 
     holder.textMusicTitle.setText(musics.get(position).title);
     holder.textMusicArtist.setText(musics.get(position).artist);
   }
 
   @Override public int getItemCount() {
-    // TODO 이건 curatedMusics 의 0번 (즉 FOR_YOU) 의 길이.
-    // TODO FOR_YOU 가 아닌 다른 것을 선택하는 등 값이 바뀌었을때 길이 재반영 하도록
-    return curatedMusicStateStore.getState().curatedMusics.get(0).musics.size();
+    // TODO 이건 categorizedMusics 의 0번 (즉 POPULAR) 의 길이.
+    // TODO NEW_ARTIST 등 선택이 바뀌었을때 길이 재반영 하도록
+    return curatedMusicStateStore.getState().categorizedMusics.get(0).musics.size();
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.image_album) ImageView imageAlbum;
+    @BindView(R.id.image_profile) ImageView imageProfile;
     @BindView(R.id.text_music_title) TextView textMusicTitle;
     @BindView(R.id.text_music_artist) TextView textMusicArtist;
 

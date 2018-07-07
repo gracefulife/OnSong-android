@@ -35,6 +35,7 @@ dependencies {
     implementation deps.glide
     implementation deps.glide_transformations
     annotationProcessor deps.glide_compiler
+    implementation deps.circleimageview
     implementation deps.blurry
 
     implementation deps.constraint

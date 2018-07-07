@@ -1,18 +1,18 @@
 package com.depromeet.onsong.home;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,8 +51,8 @@ public class HomeActivity extends BaseActivity
   @BindView(R.id.text_curated_favorite) TextView textCuratedFavorite;
   @BindView(R.id.layout_curated) ConstraintLayout layoutCurated;
   @BindView(R.id.line_categorized_for_you) View lineCategorizedForYou;
-  @BindView(R.id.text_categorized_for_you) TextView textCategorizedForYou;
-  @BindView(R.id.text_categorized_favorite) TextView textCategorizedFavorite;
+  @BindView(R.id.text_categorized_popular) TextView textCategorizedPopular;
+  @BindView(R.id.text_categorized_new_artist) TextView textCategorizedNewArtist;
   @BindView(R.id.recycler_categorized) RecyclerView recyclerCategorized;
   @BindView(R.id.layout_categorized) ConstraintLayout layoutCategorized;
   @BindView(R.id.line_on_live_for_you) View lineOnLiveForYou;
@@ -65,6 +65,8 @@ public class HomeActivity extends BaseActivity
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
 
   CuratedRecyclerAdapter curatedRecyclerAdapter;
+  SnapHelper curatedRecyclerSnapHelper;
+  CategorizedRecyclerAdapter categorizedRecyclerAdapter;
 
   Store<CuratedMusicState> curatedMusicStateStore;
 
@@ -93,14 +95,12 @@ public class HomeActivity extends BaseActivity
         CATEGORIZED_POPULAR, Stream.of(
         new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
         new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60)
     ).collect(Collectors.toList())));
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_NEW_ARTIST, Stream.of(
         new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
         new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
         new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
     ).collect(Collectors.toList())));
 
@@ -131,16 +131,18 @@ public class HomeActivity extends BaseActivity
   }
 
   @Override protected void initView() {
+    // fab
     FloatingActionButton fab = findViewById(R.id.fab);
     fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
         .setAction("Action", null).show());
 
-    FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
-    layoutManager.setFlexDirection(FlexDirection.ROW);
-    layoutManager.setJustifyContent(JustifyContent.FLEX_START);
-    layoutManager.setFlexWrap(FlexWrap.WRAP);
-    recyclerCurated.setLayoutManager(layoutManager);
+    // curated
+    LinearLayoutManager curatedLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    recyclerCurated.setLayoutManager(curatedLayoutManager);
     recyclerCurated.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+    curatedRecyclerSnapHelper = new LinearSnapHelper();
+    curatedRecyclerSnapHelper.attachToRecyclerView(recyclerCurated);
 
     curatedRecyclerAdapter = new CuratedRecyclerAdapter(curatedMusicStateStore);
     recyclerCurated.setAdapter(curatedRecyclerAdapter);
@@ -152,6 +154,26 @@ public class HomeActivity extends BaseActivity
     textCuratedFavorite.setOnClickListener(v -> curatedMusicStateStore.dispatch(oldState -> new CuratedMusicState(
         oldState.curatedMusics, oldState.categorizedMusics,
         new CuratedMusicState.ChosenCategoryPair(CURATED_FAVORITE, oldState.chosenCategoryPair.categorized)
+    )));
+
+    // categorized
+    FlexboxLayoutManager categorizedLayoutManager = new FlexboxLayoutManager(this);
+    categorizedLayoutManager.setFlexDirection(FlexDirection.COLUMN);
+    categorizedLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
+    categorizedLayoutManager.setFlexWrap(FlexWrap.WRAP);
+    recyclerCategorized.setLayoutManager(categorizedLayoutManager);
+    recyclerCategorized.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+    categorizedRecyclerAdapter = new CategorizedRecyclerAdapter(curatedMusicStateStore);
+    recyclerCategorized.setAdapter(categorizedRecyclerAdapter);
+
+    textCategorizedPopular.setOnClickListener(v -> curatedMusicStateStore.dispatch(oldState -> new CuratedMusicState(
+        oldState.curatedMusics, oldState.categorizedMusics,
+        new CuratedMusicState.ChosenCategoryPair(oldState.chosenCategoryPair.curated, CATEGORIZED_POPULAR)
+    )));
+    textCategorizedNewArtist.setOnClickListener(v -> curatedMusicStateStore.dispatch(oldState -> new CuratedMusicState(
+        oldState.curatedMusics, oldState.categorizedMusics,
+        new CuratedMusicState.ChosenCategoryPair(oldState.chosenCategoryPair.curated, CATEGORIZED_NEW_ARTIST)
     )));
   }
 
@@ -166,6 +188,12 @@ public class HomeActivity extends BaseActivity
       ));
       textCuratedFavorite.setTextColor(ContextCompat.getColor(this,
           CURATED_FAVORITE.equals(pair.curated) ? R.color.black22 : R.color.blackA50R22
+      ));
+      textCategorizedPopular.setTextColor(ContextCompat.getColor(this,
+          CATEGORIZED_POPULAR.equals(pair.categorized) ? R.color.black22 : R.color.blackA50R22
+      ));
+      textCategorizedNewArtist.setTextColor(ContextCompat.getColor(this,
+          CATEGORIZED_NEW_ARTIST.equals(pair.categorized) ? R.color.black22 : R.color.blackA50R22
       ));
     });
   }
