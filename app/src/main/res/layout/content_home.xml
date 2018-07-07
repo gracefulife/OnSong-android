@@ -5,15 +5,15 @@
     android:id="@+id/scroll_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_home">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".home.HomeActivity"
-        tools:showIn="@layout/app_bar_home">
+        tools:context=".home.HomeActivity">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_curated"
