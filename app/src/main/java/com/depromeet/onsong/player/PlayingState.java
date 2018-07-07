@@ -1,4 +1,4 @@
-package com.depromeet.onsong.detail;
+package com.depromeet.onsong.player;
 
 import com.depromeet.onsong.domain.Music;
 

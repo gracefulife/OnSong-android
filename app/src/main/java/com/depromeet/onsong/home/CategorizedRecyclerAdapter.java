@@ -42,8 +42,7 @@ public class CategorizedRecyclerAdapter extends RecyclerView.Adapter<Categorized
     List<Music> musics = musicsPairs.get(1).musics;
 
     int[] drawables = new int[]{
-        R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
-        R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
+        R.drawable.img_jayvito, R.drawable.img_meego, R.drawable.img_childdiahn
     };
 
     Glide.with(holder.imageProfile)

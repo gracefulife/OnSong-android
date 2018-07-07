@@ -1,4 +1,4 @@
-package com.depromeet.onsong.detail;
+package com.depromeet.onsong.player;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +32,7 @@ public class PlayingActivity extends BaseActivity {
 
   final int[] drawables = new int[]{
       R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
-      R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
+      R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07
   };
 
   public static final String PARAM_MUSIC = "music";

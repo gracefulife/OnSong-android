@@ -43,7 +43,7 @@ public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecycler
 
     int[] drawables = new int[]{
         R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
-        R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07, R.drawable.img_album_08
+        R.drawable.img_album_05, R.drawable.img_album_06, R.drawable.img_album_07
     };
 
     Glide.with(holder.imageAlbum)

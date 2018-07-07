@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".detail.PlayingActivity"
+            android:name=".player.PlayingActivity"
             android:theme="@style/AppThemeNoTitle.Transparent">
 
             <!--
