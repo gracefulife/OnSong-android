@@ -20,5 +20,7 @@
     <dimen name="text_medium">16dp</dimen>
     <dimen name="text_small">12dp</dimen>
     <dimen name="icon_large">44dp</dimen>
+    <dimen name="desc_medium">14dp</dimen>
+    <dimen name="desc_small">12dp</dimen>
 
 </resources>

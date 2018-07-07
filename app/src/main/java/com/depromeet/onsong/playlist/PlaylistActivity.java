@@ -32,6 +32,7 @@ import com.depromeet.onsong.R;
 import com.depromeet.onsong.detail.PlayingActivity;
 import com.depromeet.onsong.domain.Music;
 import com.depromeet.onsong.genre.GenreState;
+import com.depromeet.onsong.home.HomeActivity;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
 
@@ -136,6 +137,9 @@ public class PlaylistActivity extends BaseActivity {
               ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
             })
     );
+
+
+    imageNext.setOnClickListener(v -> startActivity(HomeActivity.intent(this)));
   }
 
   @Override protected void subscribeStore() {

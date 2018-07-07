@@ -1,5 +1,6 @@
 package com.depromeet.onsong.home;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +26,9 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
+import com.depromeet.onsong.domain.LiveMusic;
 import com.depromeet.onsong.domain.Music;
+import com.depromeet.onsong.playlist.PlaylistActivity;
 import com.groupon.grox.Store;
 
 import java.util.ArrayList;
@@ -63,8 +67,10 @@ public class HomeActivity extends BaseActivity
   CuratedRecyclerAdapter curatedRecyclerAdapter;
   SnapHelper curatedRecyclerSnapHelper;
   CategorizedRecyclerAdapter categorizedRecyclerAdapter;
+  OnLiveRecyclerAdapter onLiveRecyclerAdapter;
 
   Store<CuratedMusicState> curatedMusicStateStore;
+  Store<LiveMusicState> liveMusicStateStore;
 
   @Override protected int getLayoutRes() {
     return R.layout.activity_home;
@@ -104,6 +110,18 @@ public class HomeActivity extends BaseActivity
         new CuratedMusicState(
             curatedMusics, categorizedMusics,
             new CuratedMusicState.ChosenCategoryPair(CURATED_FOR_YOU, CATEGORIZED_POPULAR)
+        )
+    );
+
+    liveMusicStateStore = new Store<>(
+        new LiveMusicState(Stream.of(
+            new LiveMusic("Special Live, Talk About Music", "Hermes",
+                "Hiphop", "", "", 10
+            ),
+            new LiveMusic("Special Live, Talk About Music", "Hermes",
+                "Hiphop", "", "", 10
+            ))
+            .collect(Collectors.toList())
         )
     );
   }
@@ -168,6 +186,14 @@ public class HomeActivity extends BaseActivity
         oldState.curatedMusics, oldState.categorizedMusics,
         new CuratedMusicState.ChosenCategoryPair(oldState.chosenCategoryPair.curated, CATEGORIZED_NEW_ARTIST)
     )));
+
+    // On-live
+    LinearLayoutManager onLiveLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    recyclerOnLive.setLayoutManager(onLiveLayoutManager);
+    recyclerOnLive.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+    onLiveRecyclerAdapter = new OnLiveRecyclerAdapter(liveMusicStateStore);
+    recyclerOnLive.setAdapter(onLiveRecyclerAdapter);
   }
 
   @Override protected void subscribeStore() {
@@ -246,5 +272,9 @@ public class HomeActivity extends BaseActivity
     DrawerLayout drawer = findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  public static Intent intent(AppCompatActivity context) {
+    return new Intent(context, HomeActivity.class);
   }
 }
