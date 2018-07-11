@@ -7,17 +7,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_hash"
-            android:title="hash"
+            android:title=""
             app:actionLayout="@layout/menu_hash"
             app:showAsAction="never" />
         <item
             android:id="@+id/nav_bell"
-            android:title="bell"
+            android:title=""
             app:actionLayout="@layout/menu_bell"
             app:showAsAction="never" />
         <item
             android:id="@+id/nav_settings"
-            android:title="settings"
+            android:title=""
             app:actionLayout="@layout/menu_settings"
             app:showAsAction="never" />
     </group>
