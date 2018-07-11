@@ -2,7 +2,6 @@ package com.depromeet.onsong.home;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategorizedRecyclerAdapter extends RecyclerView.Adapter<CategorizedRecyclerAdapter.ViewHolder> {
   // Event provider. TODO dispose
-  public final PublishSubject<Pair<Integer, View>> onItemClickedEventProvider = PublishSubject.create();
+  public final PublishSubject<PlayerKeyWithViewsMap> onItemClickedEventProvider = PublishSubject.create();
 
   @lombok.NonNull final Store<CuratedMusicState> curatedMusicStateStore;
 
@@ -40,6 +39,7 @@ public class CategorizedRecyclerAdapter extends RecyclerView.Adapter<Categorized
     List<CuratedMusicState.CategoryMusicsPair> musicsPairs = curatedMusicStateStore.getState().categorizedMusics;
     // TODO for you or favorite
     List<Music> musics = musicsPairs.get(1).musics;
+    Music music = musics.get(0); // FIXME SELECTED MUSIC
 
     int[] drawables = new int[]{
         R.drawable.img_jayvito, R.drawable.img_meego, R.drawable.img_childdiahn
@@ -49,7 +49,9 @@ public class CategorizedRecyclerAdapter extends RecyclerView.Adapter<Categorized
         .load(drawables[position % drawables.length])
         .into(holder.imageProfile);
 
-    holder.imageProfile.setOnClickListener(v -> onItemClickedEventProvider.onNext(new Pair<>(position, holder.imageProfile)));
+    holder.imageProfile.setOnClickListener(v -> onItemClickedEventProvider.onNext(
+        new PlayerKeyWithViewsMap(position, music, holder.imageProfile, holder.textMusicTitle, holder.textMusicArtist))
+    );
 
     holder.textMusicTitle.setText(musics.get(position).title);
     holder.textMusicArtist.setText(musics.get(position).artist);

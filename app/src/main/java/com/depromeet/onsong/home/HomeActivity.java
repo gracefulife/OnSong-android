@@ -6,7 +6,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +19,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +32,7 @@ import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.onsong.domain.LiveMusic;
 import com.depromeet.onsong.domain.Music;
-import com.depromeet.onsong.playlist.PlaylistActivity;
+import com.depromeet.onsong.player.PlayingActivity;
 import com.groupon.grox.Store;
 
 import java.util.ArrayList;
@@ -36,6 +40,8 @@ import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 import static com.depromeet.onsong.home.CuratedMusicState.CATEGORIZED_NEW_ARTIST;
 import static com.depromeet.onsong.home.CuratedMusicState.CATEGORIZED_POPULAR;
@@ -44,6 +50,8 @@ import static com.depromeet.onsong.home.CuratedMusicState.CURATED_FOR_YOU;
 
 public class HomeActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
+  private static final String TAG = HomeActivity.class.getSimpleName();
+
   @BindView(R.id.recycler_curated) RecyclerView recyclerCurated;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.line_curated_for_you) View lineCuratedForYou;
@@ -193,6 +201,31 @@ public class HomeActivity extends BaseActivity
 
     onLiveRecyclerAdapter = new OnLiveRecyclerAdapter(liveMusicStateStore);
     recyclerOnLive.setAdapter(onLiveRecyclerAdapter);
+
+    Consumer<PlayerKeyWithViewsMap> consumer = playerKeyWithViewsMap -> {
+      Log.i(TAG, "initView: viewHolder is = " + playerKeyWithViewsMap.getPosition());
+      Intent intent = PlayingActivity.intent(this,
+          playerKeyWithViewsMap.getMusic(),
+          playerKeyWithViewsMap.getPosition()
+      );
+      ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+          this,
+          new Pair<>(playerKeyWithViewsMap.getImageAlbum(), PlayingActivity.VIEW_NAME_HEADER_IMAGE),
+          new Pair<>(playerKeyWithViewsMap.getTextMusicArtist(), PlayingActivity.VIEW_NAME_HEADER_ARTIST),
+          new Pair<>(playerKeyWithViewsMap.getTextMusicTitle(), PlayingActivity.VIEW_NAME_HEADER_MUSIC)
+      );
+
+      // Now we can start the Activity, providing the activity options as a bundle
+      ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
+    };
+
+    compositeDisposable.add(curatedRecyclerAdapter.onItemClickedEventProvider
+        .subscribeOn(AndroidSchedulers.mainThread())
+        .subscribe(consumer));
+    compositeDisposable.add(categorizedRecyclerAdapter.onItemClickedEventProvider
+        .subscribeOn(AndroidSchedulers.mainThread())
+        .subscribe(consumer));
+
   }
 
   @Override protected void subscribeStore() {

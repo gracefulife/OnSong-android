@@ -2,7 +2,6 @@ package com.depromeet.onsong.home;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecyclerAdapter.ViewHolder> {
   // Event provider. TODO dispose
-  public final PublishSubject<Pair<Integer, View>> onItemClickedEventProvider = PublishSubject.create();
+  public final PublishSubject<PlayerKeyWithViewsMap> onItemClickedEventProvider = PublishSubject.create();
 
   @lombok.NonNull final Store<CuratedMusicState> curatedMusicStateStore;
 
@@ -40,6 +39,7 @@ public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecycler
     List<CuratedMusicState.CategoryMusicsPair> musicsPairs = curatedMusicStateStore.getState().curatedMusics;
     // TODO for you or favorite
     List<Music> musics = musicsPairs.get(0).musics;
+    Music music = musics.get(0); // FIXME SELECTED MUSIC
 
     int[] drawables = new int[]{
         R.drawable.img_album_01, R.drawable.img_album_02, R.drawable.img_album_03, R.drawable.img_album_04,
@@ -50,7 +50,9 @@ public class CuratedRecyclerAdapter extends RecyclerView.Adapter<CuratedRecycler
         .load(drawables[position % drawables.length])
         .into(holder.imageAlbum);
 
-    holder.imageAlbum.setOnClickListener(v -> onItemClickedEventProvider.onNext(new Pair<>(position, holder.imageAlbum)));
+    holder.imageAlbum.setOnClickListener(v -> onItemClickedEventProvider.onNext(
+        new PlayerKeyWithViewsMap(position, music, holder.imageAlbum, holder.textMusicTitle, holder.textMusicArtist))
+    );
 
     holder.textMusicTitle.setText(musics.get(position).title);
     holder.textMusicArtist.setText(musics.get(position).artist);
