@@ -27,32 +27,32 @@ public class CuratedMusicStoreTest {
     List<CuratedMusicState.CategoryMusicsPair> curatedMusics = new ArrayList<>();
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FOR_YOU, Stream.of(
-        new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FAVORITE, Stream.of(
-        new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     List<CuratedMusicState.CategoryMusicsPair> categorizedMusics = new ArrayList<>();
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_POPULAR, Stream.of(
-        new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever2", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what2", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen2", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX2", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_NEW_ARTIST, Stream.of(
-        new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever2", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what2", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen2", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX2", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
 
     Store<CuratedMusicState> store = new Store<>(
@@ -67,7 +67,7 @@ public class CuratedMusicStoreTest {
 
     //THEN
     assertThat(state.chosenCategoryPair, is(new CuratedMusicState.ChosenCategoryPair(CURATED_FOR_YOU, CATEGORIZED_NEW_ARTIST)));
-    assertEquals(state.curatedMusics.get(0).musics.get(0), new Music("Whatever", "Ugly Duck", "HipHop", "", 60));
+    assertEquals(state.curatedMusics.get(0).musics.get(0), new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60));
   }
 
   @Test
@@ -76,32 +76,32 @@ public class CuratedMusicStoreTest {
     List<CuratedMusicState.CategoryMusicsPair> curatedMusics = new ArrayList<>();
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FOR_YOU, Stream.of(
-        new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FAVORITE, Stream.of(
-        new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     List<CuratedMusicState.CategoryMusicsPair> categorizedMusics = new ArrayList<>();
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_POPULAR, Stream.of(
-        new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever2", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what2", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen2", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX2", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_NEW_ARTIST, Stream.of(
-        new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen2", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever2", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what2", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen2", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX2", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
 
     Store<CuratedMusicState> store = new Store<>(

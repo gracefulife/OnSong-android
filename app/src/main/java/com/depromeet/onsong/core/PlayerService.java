@@ -1,5 +1,7 @@
 package com.depromeet.onsong.core;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -13,12 +15,18 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.session.MediaSessionManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v4.app.NotificationCompat;
+import android.support.annotation.RequiresApi;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.media.app.NotificationCompat.MediaStyle;
+import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -40,6 +48,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   public static final String ACTION_PREVIOUS = "ACTION_PREVIOUS";
   public static final String ACTION_NEXT = "ACTION_NEXT";
   public static final String ACTION_STOP = "ACTION_STOP";
+  private static final String CHANNEL_ID = "ONSONG.PLAYER";
 
   private MediaPlayer mediaPlayer;
 
@@ -304,7 +313,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     try {
       // Set the data source to the mediaFile location
-      mediaPlayer.setDataSource(activeAudio.getData());
+      mediaPlayer.setDataSource(activeAudio.getMusicUrl());
     } catch (IOException e) {
       e.printStackTrace();
       stopSelf();
@@ -511,7 +520,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
   private void updateMetaData() {
     Bitmap albumArt = BitmapFactory.decodeResource(getResources(),
-        R.drawable.image5); //replace with medias albumArt
+        R.drawable.img_album_01); //replace with medias albumArt
     // Update the current metadata
     mediaSession.setMetadata(new MediaMetadataCompat.Builder()
         .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumArt)
@@ -546,7 +555,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
-        R.drawable.image5); //replace with your own image
+        R.drawable.img_album_01); //replace with your own image
 
     // Create a new Notification
     NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
@@ -573,8 +582,46 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         .addAction(android.R.drawable.ic_media_next, "next", playbackAction(2));
 
     ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
+
+
+    NotificationCompat.Builder notificationBuilder2 =
+        new NotificationCompat.Builder(this, CHANNEL_ID);
+    notificationBuilder
+        .setStyle(
+            new MediaStyle()
+                .setMediaSession(mediaSession.getSessionToken())
+                .setShowCancelButton(true)
+                .setCancelButtonIntent(
+                    MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP)))
+        .setColor(getResources().getColor(R.color.colorAccent))
+        .setLargeIcon(largeIcon)
+        .setSmallIcon(android.R.drawable.stat_sys_headset)
+        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        .setOnlyAlertOnce(true)
+        .setContentText(activeAudio.getArtist())
+        .setContentTitle(activeAudio.getCoverUrl())
+        .setContentInfo(activeAudio.getTitle())
+        .setDeleteIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP));
   }
 
+  @RequiresApi(Build.VERSION_CODES.O)
+  private void createChannel() {
+    NotificationManager
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    // The id of the channel.
+    String id = CHANNEL_ID;
+    // The user-visible name of the channel.
+    CharSequence name = "Media playback";
+    // The user-visible description of the channel.
+    String description = "Media playback controls";
+    int importance = NotificationManager.IMPORTANCE_HIGH;
+    NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+    // Configure the notification channel.
+    mChannel.setDescription(description);
+    mChannel.setShowBadge(false);
+    mChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+    mNotificationManager.createNotificationChannel(mChannel);
+  }
 
   private PendingIntent playbackAction(int actionNumber) {
     Intent playbackAction = new Intent(this, PlayerService.class);

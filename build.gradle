@@ -23,6 +23,7 @@ buildscript {
             'okhttp'               : '3.9.1',
             'stream'               : '1.1.5',
             'threetenabp'          : '1.1.0',
+            'gson'                 : '2.7',
 
             'calligraphy'          : '3.0.0',
             'viewpump'             : '1.0.0',
@@ -63,12 +64,15 @@ buildscript {
             constraint           : "com.android.support.constraint:constraint-layout:${versions.constraint}",
             flexbox              : "com.google.android:flexbox:${versions.flexbox}",
             'support'            : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
+                                    'v7'        : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                                    'media'     : "com.android.support:support-media-compat:${versions.supportLibrary}",
                                     'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
                                     'palette'   : "com.android.support:palette-v7:${versions.supportLibrary}",
                                     'design'    : "com.android.support:design:${versions.supportLibrary}",],
 
             calligraphy          : "io.github.inflationx:calligraphy3:${versions.calligraphy}",
             viewpump             : "io.github.inflationx:viewpump:${versions.viewpump}",
+            gson                 : "com.google.code.gson:gson:${versions.gson}",
 
             lombok               : "org.projectlombok:lombok:${versions.lombok}",
             butterknife          : "com.jakewharton:butterknife:${versions.butterknife}",
