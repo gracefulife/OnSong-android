@@ -6,17 +6,19 @@ import android.provider.MediaStore;
 
 import com.depromeet.onsong.domain.Music;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
-public class StorageUtils {
+public class PreferenceUtils {
 
 
   private final String STORAGE = " STORAGE";
   private SharedPreferences preferences;
   private Context context;
 
-  public StorageUtils(Context context) {
+  public PreferenceUtils(Context context) {
     this.context = context;
   }
 

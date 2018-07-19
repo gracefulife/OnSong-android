@@ -74,13 +74,13 @@ public class PlaylistActivity extends BaseActivity {
     playlistStateStore = new Store<>(
         new PlaylistState(
             Stream.of(
-                new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-                new Music("So what", "Beenzino", "HipHop", "", 60),
-                new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-                new Music("XXX", "Kendrick Lamar", "HipHop", "", 60),
-                new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-                new Music("So what", "Beenzino", "HipHop", "", 60),
-                new Music("Seventeen", "Rich Brian", "HipHop", "", 60)
+                new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+                new Music("So what", "Beenzino", "HipHop", "", "", 60),
+                new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+                new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60),
+                new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+                new Music("So what", "Beenzino", "HipHop", "", "", 60),
+                new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60)
             ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
     );

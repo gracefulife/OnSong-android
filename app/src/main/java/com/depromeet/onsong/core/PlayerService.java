@@ -21,7 +21,6 @@ import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -110,7 +109,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     try {
 
       //Load data from SharedPreferences
-      StorageUtils storage = new StorageUtils(getApplicationContext());
+      PreferenceUtils storage = new PreferenceUtils(getApplicationContext());
       audioList = storage.loadAudio();
       audioIndex = storage.loadAudioIndex();
 
@@ -173,7 +172,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     unregisterReceiver(playNewAudio);
 
     //clear cached playlist
-    new StorageUtils(getApplicationContext()).clearCachedAudioPlaylist();
+    new PreferenceUtils(getApplicationContext()).clearCachedAudioPlaylist();
   }
 
   /**
@@ -360,7 +359,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     //Update stored index
-    new StorageUtils(getApplicationContext()).storeAudioIndex(audioIndex);
+    new PreferenceUtils(getApplicationContext()).storeAudioIndex(audioIndex);
 
     stopMedia();
     //reset mediaPlayer
@@ -381,7 +380,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     //Update stored index
-    new StorageUtils(getApplicationContext()).storeAudioIndex(audioIndex);
+    new PreferenceUtils(getApplicationContext()).storeAudioIndex(audioIndex);
 
     stopMedia();
     //reset mediaPlayer
@@ -679,7 +678,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     public void onReceive(Context context, Intent intent) {
 
       //Get the new media index form SharedPreferences
-      audioIndex = new StorageUtils(getApplicationContext()).loadAudioIndex();
+      audioIndex = new PreferenceUtils(getApplicationContext()).loadAudioIndex();
       if (audioIndex != -1 && audioIndex < audioList.size()) {
         //index is in a valid range
         activeAudio = audioList.get(audioIndex);
