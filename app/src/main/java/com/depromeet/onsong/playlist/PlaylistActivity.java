@@ -1,16 +1,12 @@
 package com.depromeet.onsong.playlist;
 
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -38,15 +34,12 @@ import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.onsong.core.PlayerService;
-import com.depromeet.onsong.core.PreferenceUtils;
-import com.depromeet.onsong.player.PlayingActivity;
 import com.depromeet.onsong.domain.Music;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.home.HomeActivity;
+import com.depromeet.onsong.player.PlayingActivity;
 import com.depromeet.onsong.utils.ColorFilter;
 import com.groupon.grox.Store;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;

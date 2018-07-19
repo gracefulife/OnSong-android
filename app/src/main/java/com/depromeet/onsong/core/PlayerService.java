@@ -363,7 +363,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     public void onReceive(Context context, Intent intent) {
       //pause audio on ACTION_AUDIO_BECOMING_NOISY
       pauseMedia();
-      buildNotification(PlaybackStatus.PAUSED);
+      buildNotification();
     }
   };
 
