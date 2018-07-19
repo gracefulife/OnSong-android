@@ -34,7 +34,6 @@ import com.depromeet.onsong.R;
 import com.depromeet.onsong.domain.Music;
 
 import java.io.IOException;
-import java.util.List;
 
 public class PlayerService extends Service implements MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener,
@@ -123,7 +122,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         e.printStackTrace();
         stopSelf();
       }
-      buildNotification(PlaybackStatus.PLAYING);
+      buildNotification();
     }
 
     //Handle Intent action from MediaSession.TransportControls
@@ -156,9 +155,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     //unregister BroadcastReceivers
     unregisterReceiver(becomingNoisyReceiver);
     unregisterReceiver(playNewAudio);
-
-    //clear cached playlist
-    new PreferenceUtils(getApplicationContext()).clearCachedAudioPlaylist();
   }
 
   /**
@@ -443,7 +439,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         super.onPlay();
 
         resumeMedia();
-        buildNotification(PlaybackStatus.PLAYING);
+//        buildNotification(PlaybackStatus.PLAYING);
       }
 
       @Override
@@ -451,7 +447,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         super.onPause();
 
         pauseMedia();
-        buildNotification(PlaybackStatus.PAUSED);
+//        buildNotification(PlaybackStatus.PAUSED);
       }
 
       @Override
@@ -460,7 +456,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
         skipToNext();
         updateMetaData();
-        buildNotification(PlaybackStatus.PLAYING);
+//        buildNotification(PlaybackStatus.PLAYING);
       }
 
       @Override
@@ -469,7 +465,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
         skipToPrevious();
         updateMetaData();
-        buildNotification(PlaybackStatus.PLAYING);
+//        buildNotification(PlaybackStatus.PLAYING);
       }
 
       @Override
@@ -499,7 +495,10 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         .build());
   }
 
-  private void buildNotification(PlaybackStatus playbackStatus) {
+  private void buildNotification() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      createChannel();
+    }
     Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
         R.drawable.img_album_01); //replace with your own image
 
@@ -602,7 +601,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
       mediaPlayer.reset();
       initMediaPlayer();
       updateMetaData();
-      buildNotification(PlaybackStatus.PLAYING);
     }
   };
 
