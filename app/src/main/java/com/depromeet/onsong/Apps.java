@@ -2,12 +2,16 @@ package com.depromeet.onsong;
 
 import android.app.Application;
 
+import com.mindorks.nybus.NYBus;
+
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 
 public class Apps extends Application {
   private static Apps instance;
+
+  private NYBus eventBus;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -27,4 +31,7 @@ public class Apps extends Application {
     return instance;
   }
 
+  public final NYBus eventBus() {
+    return eventBus == null ? eventBus = NYBus.get() : eventBus;
+  }
 }
