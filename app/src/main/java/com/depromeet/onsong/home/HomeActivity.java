@@ -88,29 +88,29 @@ public class HomeActivity extends BaseActivity
     List<CuratedMusicState.CategoryMusicsPair> curatedMusics = new ArrayList<>();
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FOR_YOU, Stream.of(
-        new Music("Jayvito", "Han-river", "HipHop", "", 60),
-        new Music("Meego", "Sin Chon", "HipHop", "", 60),
-        new Music("Childdiahn", "Hongik Univ.", "HipHop", "", 60)
+        new Music("Jayvito", "Han-river", "HipHop", "", "", 60),
+        new Music("Meego", "Sin Chon", "HipHop", "", "", 60),
+        new Music("Childdiahn", "Hongik Univ.", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     curatedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CURATED_FAVORITE, Stream.of(
-        new Music("Whatever", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what", "Beenzino", "HipHop", "", 60),
-        new Music("Seventeen", "Rich Brian", "HipHop", "", 60),
-        new Music("XXX", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what", "Beenzino", "HipHop", "", "", 60),
+        new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
+        new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     List<CuratedMusicState.CategoryMusicsPair> categorizedMusics = new ArrayList<>();
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_POPULAR, Stream.of(
-        new Music("Jayvito", "Han-river", "HipHop", "", 60),
-        new Music("Meego", "Sin Chon", "HipHop", "", 60),
-        new Music("Childdiahn", "Hongik Univ.", "HipHop", "", 60)
+        new Music("Jayvito", "Han-river", "HipHop", "", "", 60),
+        new Music("Meego", "Sin Chon", "HipHop", "", "", 60),
+        new Music("Childdiahn", "Hongik Univ.", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
     categorizedMusics.add(new CuratedMusicState.CategoryMusicsPair(
         CATEGORIZED_NEW_ARTIST, Stream.of(
-        new Music("Whatever2", "Ugly Duck", "HipHop", "", 60),
-        new Music("So what2", "Beenzino", "HipHop", "", 60),
-        new Music("XXX2", "Kendrick Lamar", "HipHop", "", 60)
+        new Music("Whatever2", "Ugly Duck", "HipHop", "", "", 60),
+        new Music("So what2", "Beenzino", "HipHop", "", "", 60),
+        new Music("XXX2", "Kendrick Lamar", "HipHop", "", "", 60)
     ).collect(Collectors.toList())));
 
     curatedMusicStateStore = new Store<>(
