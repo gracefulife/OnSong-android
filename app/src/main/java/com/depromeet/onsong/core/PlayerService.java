@@ -530,77 +530,29 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   }
 
   private void buildNotification(PlaybackStatus playbackStatus) {
-
-    /**
-     * Notification actions -> playbackAction()
-     *  0 -> Play
-     *  1 -> Pause
-     *  2 -> Next track
-     *  3 -> Previous track
-     */
-
-    int notificationAction = android.R.drawable.ic_media_pause;//needs to be initialized
-    PendingIntent play_pauseAction = null;
-
-    //Build a new notification according to the current state of the MediaPlayer
-    if (playbackStatus == PlaybackStatus.PLAYING) {
-      notificationAction = android.R.drawable.ic_media_pause;
-      //create the pause action
-      play_pauseAction = playbackAction(1);
-    } else if (playbackStatus == PlaybackStatus.PAUSED) {
-      notificationAction = android.R.drawable.ic_media_play;
-      //create the play action
-      play_pauseAction = playbackAction(0);
-    }
-
     Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
         R.drawable.img_album_01); //replace with your own image
 
-    // Create a new Notification
-    NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-        // Hide the timestamp
-        .setShowWhen(false)
-        // Set the Notification style
-        .setStyle(new NotificationCompat.MediaStyle()
-            // Attach our MediaSession token
-            .setMediaSession(mediaSession.getSessionToken())
-            // Show our playback controls in the compat view
-            .setShowActionsInCompactView(0, 1, 2))
-        // Set the Notification color
-        .setColor(getResources().getColor(R.color.colorAccent))
-        // Set the large and small icons
-        .setLargeIcon(largeIcon)
-        .setSmallIcon(android.R.drawable.stat_sys_headset)
-        // Set Notification content information
-        .setContentText(activeAudio.getArtist())
-        .setContentTitle(activeAudio.getCoverUrl())
-        .setContentInfo(activeAudio.getTitle())
-        // Add playback actions
-        .addAction(android.R.drawable.ic_media_previous, "previous", playbackAction(3))
-        .addAction(notificationAction, "pause", play_pauseAction)
-        .addAction(android.R.drawable.ic_media_next, "next", playbackAction(2));
-
-    ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
-
-
-    NotificationCompat.Builder notificationBuilder2 =
+    NotificationCompat.Builder notificationBuilder =
         new NotificationCompat.Builder(this, CHANNEL_ID);
     notificationBuilder
         .setStyle(
             new MediaStyle()
                 .setMediaSession(mediaSession.getSessionToken())
                 .setShowCancelButton(true)
-                .setCancelButtonIntent(
-                    MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP)))
+                .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP)))
         .setColor(getResources().getColor(R.color.colorAccent))
         .setLargeIcon(largeIcon)
         .setSmallIcon(android.R.drawable.stat_sys_headset)
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        .setShowWhen(false)
         .setOnlyAlertOnce(true)
         .setContentText(activeAudio.getArtist())
         .setContentTitle(activeAudio.getCoverUrl())
         .setContentInfo(activeAudio.getTitle())
         .setDeleteIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP));
+
+    ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
   }
 
   @RequiresApi(Build.VERSION_CODES.O)
