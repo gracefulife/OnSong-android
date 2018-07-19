@@ -19,8 +19,8 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
-import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -69,7 +69,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   private final IBinder iBinder = new LocalBinder();
 
   //List of available Audio files
-  private List<Music> audioList;
   private int audioIndex = -1;
   private Music activeAudio; //an object on the currently playing audio
 
@@ -91,6 +90,12 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   @Override
   public void onCreate() {
     super.onCreate();
+
+    // FIXME
+    activeAudio = new Music("Whatever", "Ugly Duck", "HipHop",
+        "https://avatars2.githubusercontent.com/u/11613775?v=4",
+        "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60);
+
     // Perform one-time setup procedures
 
     // Manage incoming phone calls during playback.
@@ -106,26 +111,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   //The system calls this method when an activity, requests the service be started
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    try {
-
-      //Load data from SharedPreferences
-      PreferenceUtils storage = new PreferenceUtils(getApplicationContext());
-      audioList = storage.loadAudio();
-      audioIndex = storage.loadAudioIndex();
-
-      if (audioIndex != -1 && audioIndex < audioList.size()) {
-        //index is in a valid range
-        activeAudio = audioList.get(audioIndex);
-      } else {
-        stopSelf();
-      }
-    } catch (NullPointerException e) {
-      stopSelf();
-    }
-
-    //Request audio focus
     if (requestAudioFocus() == false) {
-      //Could not gain focus
       stopSelf();
     }
 
@@ -348,19 +334,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   }
 
   private void skipToNext() {
-
-    if (audioIndex == audioList.size() - 1) {
-      //if last in playlist
-      audioIndex = 0;
-      activeAudio = audioList.get(audioIndex);
-    } else {
-      //get next in playlist
-      activeAudio = audioList.get(++audioIndex);
-    }
-
-    //Update stored index
-    new PreferenceUtils(getApplicationContext()).storeAudioIndex(audioIndex);
-
+    // TODO read-update chosen music
     stopMedia();
     //reset mediaPlayer
     mediaPlayer.reset();
@@ -368,19 +342,15 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   }
 
   private void skipToPrevious() {
-
     if (audioIndex == 0) {
       //if first in playlist
       //set index to the last of audioList
-      audioIndex = audioList.size() - 1;
-      activeAudio = audioList.get(audioIndex);
+//      audioIndex = audioList.size() - 1;
+//      activeAudio = audioList.get(audioIndex);
     } else {
       //get previous in playlist
-      activeAudio = audioList.get(--audioIndex);
+//      activeAudio = audioList.get(--audioIndex);
     }
-
-    //Update stored index
-    new PreferenceUtils(getApplicationContext()).storeAudioIndex(audioIndex);
 
     stopMedia();
     //reset mediaPlayer
@@ -628,18 +598,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   private BroadcastReceiver playNewAudio = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
-
-      //Get the new media index form SharedPreferences
-      audioIndex = new PreferenceUtils(getApplicationContext()).loadAudioIndex();
-      if (audioIndex != -1 && audioIndex < audioList.size()) {
-        //index is in a valid range
-        activeAudio = audioList.get(audioIndex);
-      } else {
-        stopSelf();
-      }
-
-      //A PLAY_NEW_AUDIO action received
-      //reset mediaPlayer to play the new Audio
       stopMedia();
       mediaPlayer.reset();
       initMediaPlayer();
