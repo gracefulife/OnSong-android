@@ -62,7 +62,7 @@
 
         </activity>
 
-        <service android:name=".core.PlayerService" />
+        <service android:name="com.depromeet.media.PlayerService" />
     </application>
 
 </manifest>

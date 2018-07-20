@@ -1,4 +1,4 @@
-package com.depromeet.onsong.core;
+package com.depromeet.media;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -30,7 +30,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.depromeet.onsong.R;
 import com.depromeet.media.domain.Music;
 
 import java.io.IOException;
@@ -510,7 +509,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
                 .setMediaSession(mediaSession.getSessionToken())
                 .setShowCancelButton(true)
                 .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP)))
-        .setColor(getResources().getColor(R.color.colorAccent))
+        .setColor(getResources().getColor(android.R.color.black))
         .setLargeIcon(largeIcon)
         .setSmallIcon(android.R.drawable.stat_sys_headset)
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

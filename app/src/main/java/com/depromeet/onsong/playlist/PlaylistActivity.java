@@ -33,7 +33,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.onsong.core.PlayerService;
+import com.depromeet.media.PlayerService;
 import com.depromeet.media.domain.Music;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.home.HomeActivity;
