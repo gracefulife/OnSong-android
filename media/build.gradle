@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -29,10 +33,15 @@ dependencies {
     api deps.support.v7
     api deps.support.media
 
+    api deps.stream
     api deps.gson
 
     api deps.glide
     annotationProcessor deps.glide_compiler
+
+    api deps.exoplayer.core
+    api deps.exoplayer.ui
+    api deps.exoplayer.session
 
     implementation deps.lombok
     annotationProcessor deps.lombok

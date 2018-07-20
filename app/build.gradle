@@ -38,7 +38,6 @@ dependencies {
     implementation deps.nybus
     implementation deps.rxpreference
 
-    implementation deps.stream
     implementation deps.rxjava
     implementation deps.rxandroid
     implementation deps.rxbinding
