@@ -79,9 +79,9 @@ buildscript {
             calligraphy          : "io.github.inflationx:calligraphy3:${versions.calligraphy}",
             viewpump             : "io.github.inflationx:viewpump:${versions.viewpump}",
 
-            exoplayer            : ['core'   : "com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
-                                    'ui'     : "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
-                                    'session': "com.google.android.exoplayer:extension-mediasession:${versions.exoplayer}"],
+            exoplayer            : ["com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
+                                    "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
+                                    "com.google.android.exoplayer:extension-mediasession:${versions.exoplayer}"],
 
             gson                 : "com.google.code.gson:gson:${versions.gson}",
 
