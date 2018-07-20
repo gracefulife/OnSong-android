@@ -35,9 +35,6 @@ dependencies {
     api deps.glide
     annotationProcessor deps.glide_compiler
 
-    implementation deps.lombok
-    annotationProcessor deps.lombok
-
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
     androidTestImplementation deps.espresso
