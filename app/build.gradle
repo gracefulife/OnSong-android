@@ -54,6 +54,8 @@ dependencies {
     implementation deps.rxandroid
     implementation deps.rxbinding
     implementation deps.nybus
+    implementation deps.rxpreference
+
     implementation deps.retrofit.core
     implementation deps.retrofit.json
     implementation deps.retrofit.rx
