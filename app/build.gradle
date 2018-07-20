@@ -29,19 +29,21 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation deps.grox
-    implementation deps.grox_command
+    implementation project(':player')
 
-    implementation deps.glide
     implementation deps.glide_transformations
-    annotationProcessor deps.glide_compiler
     implementation deps.circleimageview
     implementation deps.blurry
 
+    implementation deps.nybus
+    implementation deps.rxpreference
+
+    implementation deps.stream
+    implementation deps.rxjava
+    implementation deps.rxandroid
+    implementation deps.rxbinding
+
     implementation deps.constraint
-    implementation deps.support.compat
-    implementation deps.support.v7
-    implementation deps.support.media
     implementation deps.support.design
     implementation deps.support.annotation
     implementation deps.support.palette
@@ -49,19 +51,11 @@ dependencies {
     implementation deps.flexbox
 
     implementation deps.threetenabp
-    implementation deps.stream
-    implementation deps.rxjava
-    implementation deps.rxandroid
-    implementation deps.rxbinding
-    implementation deps.nybus
-    implementation deps.rxpreference
 
     implementation deps.retrofit.core
     implementation deps.retrofit.json
     implementation deps.retrofit.rx
     implementation deps.okhttp.logging
-
-    implementation deps.gson
 
     implementation deps.calligraphy
     implementation deps.viewpump

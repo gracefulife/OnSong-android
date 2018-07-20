@@ -30,6 +30,8 @@ buildscript {
             'calligraphy'          : '3.0.0',
             'viewpump'             : '1.0.0',
 
+            'exoplayer'            : '2.8.1',
+
             'junit'                : '4.12',
             'testRunner'           : '1.0.2',
             'espresso'             : '3.0.2',
@@ -76,6 +78,11 @@ buildscript {
 
             calligraphy          : "io.github.inflationx:calligraphy3:${versions.calligraphy}",
             viewpump             : "io.github.inflationx:viewpump:${versions.viewpump}",
+
+            exoplayer            : ["com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
+                                    "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
+                                    "com.google.android.exoplayer:extension-mediasession:${versions.exoplayer}"],
+
             gson                 : "com.google.code.gson:gson:${versions.gson}",
 
             lombok               : "org.projectlombok:lombok:${versions.lombok}",
