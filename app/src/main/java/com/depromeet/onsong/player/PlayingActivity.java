@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.onsong.domain.Music;
+import com.depromeet.media.domain.Music;
 import com.depromeet.onsong.utils.BetweenActivityTransitionListener;
 import com.depromeet.onsong.utils.ColorFilter;
 

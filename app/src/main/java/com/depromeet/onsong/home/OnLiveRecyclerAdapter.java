@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.depromeet.onsong.R;
-import com.depromeet.onsong.domain.LiveMusic;
+import com.depromeet.media.domain.LiveMusic;
 import com.groupon.grox.Store;
 
 import java.util.List;

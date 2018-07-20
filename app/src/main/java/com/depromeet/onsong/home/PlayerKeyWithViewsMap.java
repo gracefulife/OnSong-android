@@ -3,7 +3,7 @@ package com.depromeet.onsong.home;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.depromeet.onsong.domain.Music;
+import com.depromeet.media.domain.Music;
 
 import java.io.Serializable;
 

@@ -2,7 +2,7 @@ package com.depromeet.onsong;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.depromeet.onsong.domain.Music;
+import com.depromeet.media.domain.Music;
 import com.depromeet.onsong.home.CuratedMusicState;
 import com.groupon.grox.Store;
 

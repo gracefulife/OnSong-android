@@ -1,6 +1,6 @@
 package com.depromeet.onsong.player;
 
-import com.depromeet.onsong.domain.Music;
+import com.depromeet.media.domain.Music;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;

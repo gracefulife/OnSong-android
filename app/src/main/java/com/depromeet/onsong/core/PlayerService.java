@@ -31,7 +31,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.depromeet.onsong.R;
-import com.depromeet.onsong.domain.Music;
+import com.depromeet.media.domain.Music;
 
 import java.io.IOException;
 
