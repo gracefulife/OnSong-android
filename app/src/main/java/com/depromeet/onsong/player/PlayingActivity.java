@@ -3,6 +3,7 @@ package com.depromeet.onsong.player;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.depromeet.onsong.Apps;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.onsong.domain.Music;
@@ -105,7 +107,8 @@ public class PlayingActivity extends BaseActivity {
   }
 
   @Override protected void subscribeStore() {
-
+    int volumeControlStream = AudioManager.STREAM_MUSIC;
+    Apps.get().mediaSession();
   }
 
   private boolean addTransitionListener() {

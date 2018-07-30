@@ -1,8 +1,11 @@
 package com.depromeet.onsong;
 
 import android.app.Application;
+import android.content.ComponentName;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 
+import com.depromeet.onsong.core.MediaSessionConnection;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 import com.mindorks.nybus.NYBus;
 
@@ -15,6 +18,7 @@ public class Apps extends Application {
 
   private NYBus eventBus;
   private RxSharedPreferences preferences;
+  private MediaSessionConnection mediaSessionConnection;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -45,4 +49,19 @@ public class Apps extends Application {
   RxSharedPreferences createPreferences() {
     return RxSharedPreferences.create(PreferenceManager.getDefaultSharedPreferences(this));
   }
+
+  public final MediaSessionConnection mediaSession() {
+    // FIXME 사용 시나리오에 따라 수정필요함
+    try {
+      return mediaSessionConnection == null ? createMediaSession() : mediaSessionConnection;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  MediaSessionConnection createMediaSession() throws RemoteException {
+    return new MediaSessionConnection(this, new ComponentName(this, com.example.android.uamp.media.MusicServiceKt.class));
+  }
+
 }
