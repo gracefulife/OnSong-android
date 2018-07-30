@@ -41,13 +41,13 @@ android {
 }
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin_version}"
 
-    api "com.android.support:support-core-ui:$support_lib_version"
-    api "com.android.support:support-fragment:$support_lib_version"
-    api "com.android.support:support-media-compat:$support_lib_version"
+    api "com.android.support:support-core-ui:${versions.supportLibrary}"
+    api "com.android.support:support-fragment:${versions.supportLibrary}"
+    api "com.android.support:support-media-compat:${versions.supportLibrary}"
 
-    api "com.google.code.gson:gson:$gson_version"
+    api "com.google.code.gson:gson:${versions.gson}"
 
     // ExoPlayer dependencies
 
@@ -60,15 +60,15 @@ dependencies {
         api project(':exoplayer-library-ui')
         api project(':exoplayer-extension-mediasession')
     } else {
-        api "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
-        api "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
-        api "com.google.android.exoplayer:extension-mediasession:$exoplayer_version"
+        api "com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}"
+        api "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}"
+        api "com.google.android.exoplayer:extension-mediasession:${versions.exoplayer}"
     }
 
     // Glide dependencies
-    api "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    api "com.github.bumptech.glide:glide:${versions.glide}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
 
     // Testing
-    androidTestImplementation "com.android.support.test:runner:$test_runner_version"
+    androidTestImplementation "com.android.support.test:runner:${versions.testRunner}"
 }
