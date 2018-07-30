@@ -1,6 +1,6 @@
 package com.depromeet.onsong.home;
 
-import com.depromeet.media.domain.Music;
+import com.depromeet.onsong.domain.Music;
 
 import java.io.Serializable;
 import java.util.List;

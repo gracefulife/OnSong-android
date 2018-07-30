@@ -1,6 +1,6 @@
 package com.depromeet.onsong.home;
 
-import com.depromeet.media.domain.LiveMusic;
+import com.depromeet.onsong.domain.LiveMusic;
 
 import java.util.List;
 

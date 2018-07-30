@@ -29,7 +29,22 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':media')
+    implementation deps.grox
+    implementation deps.grox_command
+
+    implementation deps.support.compat
+    implementation deps.support.v7
+    implementation deps.support.media
+
+    implementation deps.stream
+    implementation deps.gson
+
+    implementation deps.glide
+    annotationProcessor deps.glide_compiler
+
+    implementation deps.exoplayer.core
+    implementation deps.exoplayer.ui
+    implementation deps.exoplayer.session
 
     implementation deps.glide_transformations
     implementation deps.circleimageview

@@ -30,8 +30,8 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.media.domain.LiveMusic;
-import com.depromeet.media.domain.Music;
+import com.depromeet.onsong.domain.LiveMusic;
+import com.depromeet.onsong.domain.Music;
 import com.depromeet.onsong.player.PlayingActivity;
 import com.groupon.grox.Store;
 
