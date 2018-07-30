@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+    implementation project(':media')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation deps.grox
     implementation deps.grox_command

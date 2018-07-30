@@ -1,12 +1,8 @@
 package com.depromeet.onsong.playlist;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -33,7 +29,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.media.PlayerService;
 import com.depromeet.onsong.domain.Music;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.home.HomeActivity;
@@ -71,9 +66,6 @@ public class PlaylistActivity extends BaseActivity {
   MusicRecyclerAdapter musicRecyclerAdapter;
   SnapHelper musicRecyclerSnapHelper;
 
-  // FIXME
-  private PlayerService player;
-  boolean serviceBound = false;
 
   @Override protected int getLayoutRes() {
     return R.layout.activity_playlist;
@@ -148,7 +140,6 @@ public class PlaylistActivity extends BaseActivity {
 
 
     imageNext.setOnClickListener(v -> startActivity(HomeActivity.intent(this)));
-    imagePause.setOnClickListener(v -> playAudio());
   }
 
   @Override protected void subscribeStore() {
@@ -195,42 +186,8 @@ public class PlaylistActivity extends BaseActivity {
         .putExtra(PARAM_GENRE, genreColorPair);
   }
 
-  private ServiceConnection serviceConnection = new ServiceConnection() {
-    @Override public void onServiceConnected(ComponentName componentName, IBinder service) {
-
-      PlayerService.LocalBinder binder = (PlayerService.LocalBinder) service;
-      player = binder.getService();
-      serviceBound = true;
-    }
-
-    @Override public void onServiceDisconnected(ComponentName componentName) {
-      serviceBound = false;
-    }
-  };
-
-
-  private void playAudio() {
-    //Check is service is active
-    if (!serviceBound) {
-      Intent playerIntent = new Intent(this, PlayerService.class);
-      startService(playerIntent);
-      bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-    } else {
-      //Service is active
-      //Send a broadcast to the service -> PLAY_NEW_AUDIO
-      // TODO RxRelay
-//      Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
-//      sendBroadcast(broadcastIntent);
-    }
-  }
-
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    if (serviceBound) {
-      unbindService(serviceConnection);
-      //service is active
-      player.stopSelf();
-    }
   }
 }
