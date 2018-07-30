@@ -60,7 +60,7 @@ public class Apps extends Application {
     }
   }
 
-  MediaSessionConnection createMediaSession() throws RemoteException {
+  MediaSessionConnection createMediaSession() {
     return new MediaSessionConnection(this, new ComponentName(this, com.example.android.uamp.media.MusicServiceKt.class));
   }
 

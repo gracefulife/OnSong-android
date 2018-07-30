@@ -2,12 +2,12 @@ package com.depromeet.onsong.core;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.RemoteException;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import java.util.List;
 
@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MediaSessionConnection extends MediaBrowserCompat.ConnectionCallback {
+  private static final String TAG = MediaSessionConnection.class.getSimpleName();
+
   public Context context;
   public ComponentName componentName;
 
@@ -49,7 +51,7 @@ public class MediaSessionConnection extends MediaBrowserCompat.ConnectionCallbac
   public class MediaBrowserConnectionCallback extends MediaBrowserCompat.ConnectionCallback {
     @Override public void onConnected() {
       super.onConnected();
-
+      Log.i(TAG, "onConnected: ");
       try {
         mediaControllerCompat = new MediaControllerCompat(context, mediaBrowserCompat.getSessionToken());
         mediaControllerCompat.registerCallback(mediaControllerCallback);
