@@ -13,6 +13,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +37,10 @@ import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
 import com.depromeet.media.PlayerService;
 import com.depromeet.media.domain.Music;
+import com.depromeet.onsong.core.MediaBrowserConnectionCallback;
+import com.depromeet.onsong.core.MediaBrowserSubscriptionCallback;
+import com.depromeet.onsong.core.MediaControllerCallback;
+import com.depromeet.onsong.core.MusicService;
 import com.depromeet.onsong.genre.GenreState;
 import com.depromeet.onsong.home.HomeActivity;
 import com.depromeet.onsong.player.PlayingActivity;
@@ -71,12 +77,45 @@ public class PlaylistActivity extends BaseActivity {
   MusicRecyclerAdapter musicRecyclerAdapter;
   SnapHelper musicRecyclerSnapHelper;
 
+  MediaControllerCallback mediaControllerCallback;
+  MediaBrowserSubscriptionCallback mediaBrowserSubscriptionCallback;
+  MediaBrowserConnectionCallback mediaBrowserConnectionCallback;
+
   // FIXME
-  private PlayerService player;
-  boolean serviceBound = false;
+  private MediaBrowserCompat mediaBrowser;
+
 
   @Override protected int getLayoutRes() {
     return R.layout.activity_playlist;
+  }
+
+  @Override protected void onStart() {
+    super.onStart();
+
+    mediaControllerCallback = new MediaControllerCallback();
+    mediaBrowserSubscriptionCallback = new MediaBrowserSubscriptionCallback();
+    mediaBrowserConnectionCallback = new MediaBrowserConnectionCallback(
+        this, () -> mediaBrowser, mediaBrowserSubscriptionCallback
+    );
+
+    mediaBrowser = new MediaBrowserCompat(this, new ComponentName(this, MusicService.class), mediaBrowserConnectionCallback, null);
+    mediaBrowser.connect();
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    MediaControllerCompat controller = MediaControllerCompat.getMediaController(this);
+    if (controller != null) {
+      controller.unregisterCallback(mediaControllerCallback);
+    }
+    if (mediaBrowser != null && mediaBrowser.isConnected()) {
+      // FIXME
+//      if (mCurrentMetadata != null) {
+//        mediaBrowser.unsubscribe(mCurrentMetadata.getDescription().getMediaId());
+//      }
+      mediaBrowser.disconnect();
+    }
   }
 
   @Override protected void initStore() {
@@ -190,47 +229,15 @@ public class PlaylistActivity extends BaseActivity {
     });
   }
 
+  private void playAudio() {
+    MediaControllerCompat.getMediaController(this)
+        .getTransportControls()
+        .playFromMediaId(
+            "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", null);
+  }
+
   public static Intent intent(AppCompatActivity activity, GenreState.GenreColorPair genreColorPair) {
     return new Intent(activity, PlaylistActivity.class)
         .putExtra(PARAM_GENRE, genreColorPair);
-  }
-
-  private ServiceConnection serviceConnection = new ServiceConnection() {
-    @Override public void onServiceConnected(ComponentName componentName, IBinder service) {
-
-      PlayerService.LocalBinder binder = (PlayerService.LocalBinder) service;
-      player = binder.getService();
-      serviceBound = true;
-    }
-
-    @Override public void onServiceDisconnected(ComponentName componentName) {
-      serviceBound = false;
-    }
-  };
-
-
-  private void playAudio() {
-    //Check is service is active
-    if (!serviceBound) {
-      Intent playerIntent = new Intent(this, PlayerService.class);
-      startService(playerIntent);
-      bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-    } else {
-      //Service is active
-      //Send a broadcast to the service -> PLAY_NEW_AUDIO
-      // TODO RxRelay
-//      Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
-//      sendBroadcast(broadcastIntent);
-    }
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (serviceBound) {
-      unbindService(serviceConnection);
-      //service is active
-      player.stopSelf();
-    }
   }
 }

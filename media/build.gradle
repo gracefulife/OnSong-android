@@ -22,6 +22,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    api deps.stream
+    api deps.rxjava
+    api deps.rxandroid
+    api deps.rxbinding
+
     api deps.grox
     api deps.grox_command
 
