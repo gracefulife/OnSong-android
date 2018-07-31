@@ -1,12 +1,11 @@
 package com.depromeet.onsong.playlist;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.IBinder;
+import android.media.session.PlaybackState;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -14,7 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,13 +31,14 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.Supplier;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.depromeet.media.MusicLibrary;
+import com.depromeet.media.domain.Music;
 import com.depromeet.onsong.BaseActivity;
 import com.depromeet.onsong.R;
-import com.depromeet.media.PlayerService;
-import com.depromeet.media.domain.Music;
 import com.depromeet.onsong.core.MediaBrowserConnectionCallback;
 import com.depromeet.onsong.core.MediaBrowserSubscriptionCallback;
 import com.depromeet.onsong.core.MediaControllerCallback;
@@ -49,6 +51,7 @@ import com.groupon.grox.Store;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -80,6 +83,10 @@ public class PlaylistActivity extends BaseActivity {
   MediaControllerCallback mediaControllerCallback;
   MediaBrowserSubscriptionCallback mediaBrowserSubscriptionCallback;
   MediaBrowserConnectionCallback mediaBrowserConnectionCallback;
+  Supplier<MediaBrowserCompat> mediaBrowserSupplier;
+
+  private MediaMetadataCompat mCurrentMetadata;
+  private PlaybackStateCompat mCurrentState;
 
   // FIXME
   private MediaBrowserCompat mediaBrowser;
@@ -91,15 +98,54 @@ public class PlaylistActivity extends BaseActivity {
 
   @Override protected void onStart() {
     super.onStart();
+    mediaBrowserSupplier = () -> mediaBrowser;
 
     mediaControllerCallback = new MediaControllerCallback();
     mediaBrowserSubscriptionCallback = new MediaBrowserSubscriptionCallback();
     mediaBrowserConnectionCallback = new MediaBrowserConnectionCallback(
-        this, () -> mediaBrowser, mediaBrowserSubscriptionCallback
+        this, mediaBrowserSupplier, mediaBrowserSubscriptionCallback
     );
 
     mediaBrowser = new MediaBrowserCompat(this, new ComponentName(this, MusicService.class), mediaBrowserConnectionCallback, null);
+    Disposable disposable = mediaBrowserConnectionCallback.onConnectedEventProvider.subscribe(mediaControllerCompat -> {
+      Log.i(TAG, "onStart: 연결 구독자로 옴");
+      mediaBrowser.subscribe(mediaBrowser.getRoot(), mediaBrowserSubscriptionCallback);
+
+      MediaControllerCompat mediaController = new MediaControllerCompat(this, mediaBrowser.getSessionToken());
+      updatePlaybackState(mediaController.getPlaybackState());
+      updateMetadata(mediaController.getMetadata());
+      mediaController.registerCallback(mediaControllerCallback);
+      MediaControllerCompat.setMediaController(this, mediaController);
+    });
+
     mediaBrowser.connect();
+    Log.i(TAG, "onStart: 연결요청!");
+    compositeDisposable.add(disposable);
+  }
+
+  private void updatePlaybackState(PlaybackStateCompat state) {
+//    mCurrentState = state;
+    if (state == null
+        || state.getState() == PlaybackState.STATE_PAUSED
+        || state.getState() == PlaybackState.STATE_STOPPED) {
+//      mPlayPause.setImageDrawable(
+//          ContextCompat.getDrawable(this, R.drawable.ic_play_arrow_black_36dp));
+    } else {
+//      mPlayPause.setImageDrawable(
+//          ContextCompat.getDrawable(this, R.drawable.ic_pause_black_36dp));
+    }
+  }
+
+  private void updateMetadata(MediaMetadataCompat metadata) {
+    mCurrentMetadata = metadata;
+//    mTitle.setText(metadata == null ? "" : metadata.getDescription().getTitle());
+//    mSubtitle.setText(metadata == null ? "" : metadata.getDescription().getSubtitle());
+//    mAlbumArt.setImageBitmap(
+//        metadata == null
+//            ? null
+//            : MusicLibrary.getAlbumBitmap(
+//            this, metadata.getDescription().getMediaId()));
+//    mBrowserAdapter.notifyDataSetChanged();
   }
 
   @Override
@@ -232,8 +278,7 @@ public class PlaylistActivity extends BaseActivity {
   private void playAudio() {
     MediaControllerCompat.getMediaController(this)
         .getTransportControls()
-        .playFromMediaId(
-            "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", null);
+        .playFromMediaId("http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", null);
   }
 
   public static Intent intent(AppCompatActivity activity, GenreState.GenreColorPair genreColorPair) {
