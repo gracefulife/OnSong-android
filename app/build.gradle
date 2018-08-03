@@ -39,9 +39,6 @@ dependencies {
     implementation deps.rxpreference
 
     implementation deps.constraint
-    implementation deps.support.design
-    implementation deps.support.annotation
-    implementation deps.support.palette
     implementation deps.constraint
     implementation deps.flexbox
 

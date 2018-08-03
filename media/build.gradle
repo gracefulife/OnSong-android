@@ -30,6 +30,9 @@ dependencies {
     api deps.grox
     api deps.grox_command
 
+    api deps.support.design
+    api deps.support.annotation
+    api deps.support.palette
     api deps.support.compat
     api deps.support.v7
     api deps.support.media

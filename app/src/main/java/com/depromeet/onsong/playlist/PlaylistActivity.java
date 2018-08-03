@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.session.PlaybackState;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,6 +57,8 @@ import io.reactivex.disposables.Disposable;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.depromeet.onsong.core.MusicService.PARAM_MUSIC;
+import static com.depromeet.onsong.core.MusicToMetaDataCompat.toMetaData;
 import static com.depromeet.onsong.playlist.PlaylistState.SCROLL_BY_SELECTION;
 import static com.depromeet.onsong.utils.TransitionUtils.transitionOnBackground;
 
@@ -108,7 +111,8 @@ public class PlaylistActivity extends BaseActivity {
     );
 
     mediaBrowser = new MediaBrowserCompat(this, new ComponentName(this, MusicService.class), mediaBrowserConnectionCallback, null);
-    Disposable disposable = mediaBrowserConnectionCallback.onConnectedEventProvider.subscribe(mediaController -> {
+
+    Disposable disposable1 = mediaBrowserConnectionCallback.onConnectedEventProvider.subscribe(mediaController -> {
       Log.i(TAG, "onStart: 연결 구독자로 옴");
       mediaBrowser.subscribe(mediaBrowser.getRoot(), mediaBrowserSubscriptionCallback);
 
@@ -119,15 +123,21 @@ public class PlaylistActivity extends BaseActivity {
       MediaControllerCompat.setMediaController(this, mediaController);
     });
 
+    Disposable disposable2 = mediaControllerCallback.onMetadataChangedEventProvider.subscribe(this::updateMetadata);
+    Disposable disposable3 = mediaControllerCallback.onPlaybackStateChangedEventProvider.subscribe(this::updatePlaybackState);
+    Disposable disposable4 = mediaControllerCallback.onSessionDestroyedEventProvider.subscribe(aBoolean -> updatePlaybackState(null));
+    compositeDisposable.add(disposable1);
+    compositeDisposable.add(disposable2);
+    compositeDisposable.add(disposable3);
+    compositeDisposable.add(disposable4);
+
     mediaBrowser.connect();
-    Log.i(TAG, "onStart: 연결요청!");
-    compositeDisposable.add(disposable);
   }
 
   private void updatePlaybackState(PlaybackStateCompat state) {
     mCurrentState = state;
-    if (state == null
-        || state.getState() == PlaybackState.STATE_PAUSED
+    Log.i(TAG, "updatePlaybackState: state = " + state);
+    if (state == null || state.getState() == PlaybackState.STATE_PAUSED
         || state.getState() == PlaybackState.STATE_STOPPED) {
       imagePause.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_play));
     } else {
@@ -137,14 +147,6 @@ public class PlaylistActivity extends BaseActivity {
 
   private void updateMetadata(MediaMetadataCompat metadata) {
     mCurrentMetadata = metadata;
-//    mTitle.setText(metadata == null ? "" : metadata.getDescription().getTitle());
-//    mSubtitle.setText(metadata == null ? "" : metadata.getDescription().getSubtitle());
-//    mAlbumArt.setImageBitmap(
-//        metadata == null
-//            ? null
-//            : MusicLibrary.getAlbumBitmap(
-//            this, metadata.getDescription().getMediaId()));
-//    mBrowserAdapter.notifyDataSetChanged();
   }
 
   @Override
@@ -167,13 +169,13 @@ public class PlaylistActivity extends BaseActivity {
     playlistStateStore = new Store<>(
         new PlaylistState(
             Stream.of(
-                new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
-                new Music("So what", "Beenzino", "HipHop", "", "", 60),
-                new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60),
-                new Music("XXX", "Kendrick Lamar", "HipHop", "", "", 60),
-                new Music("Whatever", "Ugly Duck", "HipHop", "", "", 60),
-                new Music("So what", "Beenzino", "HipHop", "", "", 60),
-                new Music("Seventeen", "Rich Brian", "HipHop", "", "", 60)
+                new Music("Whatever", "Ugly Duck", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("So what", "Beenzino", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("Seventeen", "Rich Brian", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("XXX", "Kendrick Lamar", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("Whatever", "Ugly Duck", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("So what", "Beenzino", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60),
+                new Music("Seventeen", "Rich Brian", "HipHop", "", "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60)
             ).collect(Collectors.toList()), 0, PlaylistState.SCROLL_BY_EMPTY
         )
     );
@@ -230,9 +232,18 @@ public class PlaylistActivity extends BaseActivity {
             })
     );
 
-
     imageNext.setOnClickListener(v -> startActivity(HomeActivity.intent(this)));
-    imagePause.setOnClickListener(v -> playAudio());
+    imagePause.setOnClickListener(v -> {
+      Log.i(TAG, "initView: mCurrentState" + mCurrentState);
+      final int state = mCurrentState == null ? PlaybackStateCompat.STATE_NONE : mCurrentState.getState();
+      if (state == PlaybackState.STATE_PAUSED || state == PlaybackState.STATE_STOPPED || state == PlaybackState.STATE_NONE) {
+        playAudio();
+      } else {
+        MediaControllerCompat.getMediaController(this)
+            .getTransportControls()
+            .pause();
+      }
+    });
   }
 
   @Override protected void subscribeStore() {
@@ -275,9 +286,18 @@ public class PlaylistActivity extends BaseActivity {
   }
 
   private void playAudio() {
+    Music music = playlistStateStore.getState().musics.get(
+        playlistStateStore.getState().chosen
+    );
+
+    mCurrentMetadata = toMetaData(this, music);
+    updateMetadata(mCurrentMetadata);
+    Bundle bundle = new Bundle();
+    bundle.putParcelable(PARAM_MUSIC, mCurrentMetadata);
+
     MediaControllerCompat.getMediaController(this)
         .getTransportControls()
-        .playFromUri(Uri.parse("http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3"), null);
+        .playFromUri(Uri.parse(music.getMusicUrl()), bundle);
   }
 
   public static Intent intent(AppCompatActivity activity, GenreState.GenreColorPair genreColorPair) {

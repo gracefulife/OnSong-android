@@ -15,8 +15,6 @@
  */
 package com.depromeet.onsong.core;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,15 +24,15 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 
-import com.depromeet.media.BuildConfig;
 import com.depromeet.media.MusicLibrary;
 import com.depromeet.media.PlaybackManager;
-import com.depromeet.onsong.R;
 
 import java.util.List;
 
 public class MusicService extends MediaBrowserServiceCompat {
   private static final String TAG = MusicService.class.getSimpleName();
+
+  public static final String PARAM_MUSIC = "music";
   private MediaSessionCompat mSession;
   private PlaybackManager mPlayback;
 
@@ -68,6 +66,8 @@ public class MusicService extends MediaBrowserServiceCompat {
       );
       MediaMetadataCompat metadata = builder.build();
 
+//      Log.i(TAG, "onPlayFromUri: extras = " + extras);
+//      MediaMetadataCompat metadata = extras.getParcelable(PARAM_MUSIC);
       mSession.setMetadata(metadata);
       mPlayback.play(metadata);
     }
