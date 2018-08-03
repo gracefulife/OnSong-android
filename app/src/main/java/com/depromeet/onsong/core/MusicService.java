@@ -76,7 +76,7 @@ public class MusicService extends MediaBrowserServiceCompat {
     public void onPlay() {
       Log.i(TAG, "onPlay: ");
       if (mPlayback.getCurrentMediaId() != null) {
-        onPlayFromMediaId(mPlayback.getCurrentMediaId(), null);
+        onPlayFromUri(Uri.parse(mPlayback.getCurrentMediaId()), null);
       }
     }
 
@@ -115,18 +115,13 @@ public class MusicService extends MediaBrowserServiceCompat {
             | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
     setSessionToken(mSession.getSessionToken());
 
-    // TODO: Uncomment the following line to show a notification.
-    final MediaNotificationManager mediaNotificationManager =
-        new MediaNotificationManager(this);
+    final MediaNotificationManager mediaNotificationManager = new MediaNotificationManager(this);
 
     mPlayback = new PlaybackManager(
         this,
         state -> {
           mSession.setPlaybackState(state);
-
-          // TODO: Uncomment the following line to show a notification.
-          mediaNotificationManager.update(
-              mPlayback.getCurrentMedia(), state, getSessionToken());
+          mediaNotificationManager.update(mPlayback.getCurrentMedia(), state, getSessionToken());
         });
   }
 

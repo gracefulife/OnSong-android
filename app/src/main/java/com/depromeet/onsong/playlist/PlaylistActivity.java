@@ -129,11 +129,9 @@ public class PlaylistActivity extends BaseActivity {
     if (state == null
         || state.getState() == PlaybackState.STATE_PAUSED
         || state.getState() == PlaybackState.STATE_STOPPED) {
-//      mPlayPause.setImageDrawable(
-//          ContextCompat.getDrawable(this, R.drawable.ic_play_arrow_black_36dp));
+      imagePause.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_play));
     } else {
-//      mPlayPause.setImageDrawable(
-//          ContextCompat.getDrawable(this, R.drawable.ic_pause_black_36dp));
+      imagePause.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_pause));
     }
   }
 

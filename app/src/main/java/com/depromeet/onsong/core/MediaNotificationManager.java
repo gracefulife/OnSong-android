@@ -16,20 +16,29 @@
 package com.depromeet.onsong.core;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.app.NotificationManager;
+import android.util.Log;
 
-import com.depromeet.media.MusicLibrary;
+import com.bumptech.glide.Glide;
+import com.depromeet.onsong.R;
 import com.depromeet.onsong.playlist.PlaylistActivity;
+
+import java.util.Objects;
 
 
 /**
@@ -37,8 +46,12 @@ import com.depromeet.onsong.playlist.PlaylistActivity;
  * required so that the music service don't get killed during playback.
  */
 public class MediaNotificationManager extends BroadcastReceiver {
-  private static final int NOTIFICATION_ID = 412;
+  private static final String TAG = MediaNotificationManager.class.getSimpleName();
+  private static final int NOTIFICATION_ID = 224;
   private static final int REQUEST_CODE = 100;
+
+  public static final String CHANNEL_ID = "OnSong";
+  public static final String CHANNEL_DESCRIPTION = "OnSong-Media-Channel";
 
   private static final String ACTION_PAUSE = "com.example.android.musicplayercodelab.pause";
   private static final String ACTION_PLAY = "com.example.android.musicplayercodelab.play";
@@ -57,7 +70,9 @@ public class MediaNotificationManager extends BroadcastReceiver {
   private boolean mStarted;
 
   public MediaNotificationManager(MusicService service) {
+    Log.i(TAG, "MediaNotificationManager: ");
     mService = service;
+    createNotificationChannel();
 
     String pkg = mService.getPackageName();
     PendingIntent playIntent =
@@ -141,12 +156,8 @@ public class MediaNotificationManager extends BroadcastReceiver {
     }
   }
 
-  public void update(
-      MediaMetadataCompat metadata,
-      PlaybackStateCompat state,
-      MediaSessionCompat.Token token) {
-    if (state == null
-        || state.getState() == PlaybackStateCompat.STATE_STOPPED
+  public void update(MediaMetadataCompat metadata, PlaybackStateCompat state, MediaSessionCompat.Token token) {
+    if (state == null || state.getState() == PlaybackStateCompat.STATE_STOPPED
         || state.getState() == PlaybackStateCompat.STATE_NONE) {
       mService.stopForeground(true);
       try {
@@ -161,7 +172,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
       return;
     }
     boolean isPlaying = state.getState() == PlaybackStateCompat.STATE_PLAYING;
-    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mService);
+    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mService, CHANNEL_ID);
     MediaDescriptionCompat description = metadata.getDescription();
 
     notificationBuilder
@@ -169,17 +180,17 @@ public class MediaNotificationManager extends BroadcastReceiver {
             new android.support.v4.media.app.NotificationCompat.MediaStyle()
                 .setMediaSession(token)
                 .setShowActionsInCompactView(0, 1, 2))
-        .setColor(
-            mService.getApplication().getResources().getColor(com.depromeet.media.R.color.notification_bg))
-        .setSmallIcon(com.depromeet.media.R.drawable.ic_notification)
+        .setColor(mService.getApplication().getResources().getColor(com.depromeet.media.R.color.notification_bg))
+        .setSmallIcon(R.drawable.ic_notification)
+        .setLargeIcon(
+            BitmapFactory.decodeResource(mService.getResources(),
+                com.depromeet.media.R.drawable.img_album_01)
+        )
         .setVisibility(Notification.VISIBILITY_PUBLIC)
         .setContentIntent(createContentIntent())
         .setContentTitle(description.getTitle())
         .setContentText(description.getSubtitle())
-        .setLargeIcon(MusicLibrary.getAlbumBitmap(mService, description.getMediaId()))
-        .setOngoing(isPlaying)
-        .setWhen(isPlaying ? System.currentTimeMillis() - state.getPosition() : 0)
-        .setShowWhen(isPlaying)
+        .setOnlyAlertOnce(true)
         .setUsesChronometer(isPlaying);
 
     // If skip to next action is enabled
@@ -195,12 +206,15 @@ public class MediaNotificationManager extends BroadcastReceiver {
     }
 
     Notification notification = notificationBuilder.build();
+    Log.i(TAG, "update: notification = " + notification);
 
     if (isPlaying && !mStarted) {
+      Log.i(TAG, "update: on Foreground");
       mService.startService(new Intent(mService.getApplicationContext(), MusicService.class));
       mService.startForeground(NOTIFICATION_ID, notification);
       mStarted = true;
     } else {
+      Log.i(TAG, "update: on Foreground else " + isPlaying);
       if (!isPlaying) {
         mService.stopForeground(false);
         mStarted = false;
@@ -213,5 +227,17 @@ public class MediaNotificationManager extends BroadcastReceiver {
     Intent openUI = new Intent(mService, PlaylistActivity.class);
     openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
     return PendingIntent.getActivity(mService, REQUEST_CODE, openUI, PendingIntent.FLAG_CANCEL_CURRENT);
+  }
+
+  private void createNotificationChannel() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      int importance = NotificationManager.IMPORTANCE_HIGH;
+      NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
+      channel.setDescription(CHANNEL_DESCRIPTION);
+      // Register the channel with the system; you can't change the importance
+      // or other notification behaviors after this
+      NotificationManager notificationManager = mService.getSystemService(NotificationManager.class);
+      Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
+    }
   }
 }
