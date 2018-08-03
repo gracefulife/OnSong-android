@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.session.PlaybackState;
+import android.net.Uri;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -107,13 +108,13 @@ public class PlaylistActivity extends BaseActivity {
     );
 
     mediaBrowser = new MediaBrowserCompat(this, new ComponentName(this, MusicService.class), mediaBrowserConnectionCallback, null);
-    Disposable disposable = mediaBrowserConnectionCallback.onConnectedEventProvider.subscribe(mediaControllerCompat -> {
+    Disposable disposable = mediaBrowserConnectionCallback.onConnectedEventProvider.subscribe(mediaController -> {
       Log.i(TAG, "onStart: 연결 구독자로 옴");
       mediaBrowser.subscribe(mediaBrowser.getRoot(), mediaBrowserSubscriptionCallback);
 
-      MediaControllerCompat mediaController = new MediaControllerCompat(this, mediaBrowser.getSessionToken());
       updatePlaybackState(mediaController.getPlaybackState());
       updateMetadata(mediaController.getMetadata());
+
       mediaController.registerCallback(mediaControllerCallback);
       MediaControllerCompat.setMediaController(this, mediaController);
     });
@@ -124,7 +125,7 @@ public class PlaylistActivity extends BaseActivity {
   }
 
   private void updatePlaybackState(PlaybackStateCompat state) {
-//    mCurrentState = state;
+    mCurrentState = state;
     if (state == null
         || state.getState() == PlaybackState.STATE_PAUSED
         || state.getState() == PlaybackState.STATE_STOPPED) {
@@ -157,9 +158,9 @@ public class PlaylistActivity extends BaseActivity {
     }
     if (mediaBrowser != null && mediaBrowser.isConnected()) {
       // FIXME
-//      if (mCurrentMetadata != null) {
-//        mediaBrowser.unsubscribe(mCurrentMetadata.getDescription().getMediaId());
-//      }
+      if (mCurrentMetadata != null) {
+        mediaBrowser.unsubscribe(mCurrentMetadata.getDescription().getMediaId());
+      }
       mediaBrowser.disconnect();
     }
   }
@@ -278,7 +279,7 @@ public class PlaylistActivity extends BaseActivity {
   private void playAudio() {
     MediaControllerCompat.getMediaController(this)
         .getTransportControls()
-        .playFromMediaId("http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", null);
+        .playFromUri(Uri.parse("http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3"), null);
   }
 
   public static Intent intent(AppCompatActivity activity, GenreState.GenreColorPair genreColorPair) {

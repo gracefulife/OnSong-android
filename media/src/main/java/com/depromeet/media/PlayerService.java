@@ -90,9 +90,9 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     super.onCreate();
 
     // FIXME
-//    activeAudio = new Music("Whatever", "Ugly Duck", "HipHop",
-//        "https://avatars2.githubusercontent.com/u/11613775?v=4",
-//        "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60);
+    activeAudio = new Music("Whatever", "Ugly Duck", "HipHop",
+        "https://avatars2.githubusercontent.com/u/11613775?v=4",
+        "http://depromeet-4th-final.s3.amazonaws.com/music/test.mp3", 60);
 
     // Perform one-time setup procedures
 
@@ -267,8 +267,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
   }
 
   private boolean removeAudioFocus() {
-    return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-        audioManager.abandonAudioFocus(this);
+    return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == audioManager.abandonAudioFocus(this);
   }
 
 

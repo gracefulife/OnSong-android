@@ -23,6 +23,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -33,6 +34,7 @@ import static android.media.MediaPlayer.OnCompletionListener;
  */
 public class PlaybackManager
     implements AudioManager.OnAudioFocusChangeListener, MediaPlayer.OnCompletionListener {
+  private static final String TAG = PlaybackManager.class.getSimpleName();
 
   private final Context mContext;
   private int mState;
@@ -85,11 +87,11 @@ public class PlaybackManager
     if (mediaChanged) {
       mCurrentMedia = metadata;
       try {
-        mMediaPlayer.setDataSource(
-            mContext.getApplicationContext(),
-            Uri.parse(MusicLibrary.getSongUri(mediaId)));
+        Log.i(TAG, "play: mediaId is = " + mediaId);
+        mMediaPlayer.setDataSource(mediaId);
         mMediaPlayer.prepare();
       } catch (IOException e) {
+        e.printStackTrace();
         throw new RuntimeException(e);
       }
     }

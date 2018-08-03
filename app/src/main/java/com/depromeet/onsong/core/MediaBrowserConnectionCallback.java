@@ -30,11 +30,7 @@ public class MediaBrowserConnectionCallback extends MediaBrowserCompat.Connectio
 
     mediaBrowser.subscribe(mediaBrowser.getRoot(), subscriptionCallback);
     try {
-      MediaControllerCompat mediaController =
-          new MediaControllerCompat(activity, mediaBrowser.getSessionToken());
-//      updatePlaybackState(mediaController.getPlaybackState());
-//      updateMetadata(mediaController.getMetadata());
-//      mediaController.registerCallback(mMediaControllerCallback);
+      MediaControllerCompat mediaController = new MediaControllerCompat(activity, mediaBrowser.getSessionToken());
       MediaControllerCompat.setMediaController(activity, mediaController);
 
       onConnectedEventProvider.onNext(mediaController);
