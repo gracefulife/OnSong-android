@@ -92,9 +92,7 @@ public class PlaylistActivity extends BaseActivity {
   private MediaMetadataCompat mCurrentMetadata;
   private PlaybackStateCompat mCurrentState;
 
-  // FIXME
   private MediaBrowserCompat mediaBrowser;
-
 
   @Override protected int getLayoutRes() {
     return R.layout.activity_playlist;
